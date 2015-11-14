@@ -17,7 +17,7 @@ namespace RogueVerse.Components {
         }
 
         update() {
-            var speed = "Speed: " + Math.round(this.player.ship.body.velocity.x) + ", " + Math.round(this.player.ship.body.velocity.y);
+            var speed = "Speed: " + Math.round(new Phaser.Point(this.player.ship.body.velocity.x, this.player.ship.body.velocity.y).getMagnitude());
             var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
             
             this.text.setText(speed + "\n" + mode);
