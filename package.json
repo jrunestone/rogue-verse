@@ -1,0 +1,12 @@
+{
+  "name": "rogue-verse",
+  "private": true,
+  "dependencies": {
+    "http-server": "^0.8.5",
+    "phaser": "^2.4.4"
+  },
+  "scripts": {
+    "build": "tsc && cp node_modules/phaser/build/phaser.min.js build/scripts/",
+    "start": "http-server -p 5000 build"
+  }
+}
