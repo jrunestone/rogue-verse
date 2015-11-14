@@ -15,14 +15,17 @@ namespace RogueVerse.Components {
                 font: "16px Arial",
                 fill: "#ffffff"
             });
+            
+            this.text.fixedToCamera = true;
         }
 
         update() {
             var angle = "Angle: " + Math.round(this.player.ship.body.angle);
             var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
             var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
+            var pos = "Position: " + Math.round(this.player.ship.x) + ", " + Math.round(this.player.ship.y);
             
-            this.text.setText(angle + "\n" + speed + "\n" + mode);
+            this.text.setText(angle + "\n" + speed + "\n" + pos + "\n" + mode);
         }
     }
 }

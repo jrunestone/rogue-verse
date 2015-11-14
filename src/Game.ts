@@ -6,7 +6,7 @@
 namespace RogueVerse {
     export class Game extends Phaser.Game {
         constructor() {
-            super("100", "100", Phaser.AUTO);
+            super(1280, 960, Phaser.AUTO);
 
             this.state.add(States.Boot.Key, States.Boot);
             this.state.add(States.Preload.Key, States.Preload);

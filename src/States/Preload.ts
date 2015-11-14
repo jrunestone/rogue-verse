@@ -5,6 +5,7 @@ namespace RogueVerse.States {
         static Key = "preload";
         
         preload() {
+            this.game.load.image("starfield", "assets/starfield.jpg");
             this.game.load.image("ship1", "assets/ship1.png");
         }
         

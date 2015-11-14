@@ -15,6 +15,7 @@ namespace RogueVerse.Entities {
             this.game.physics.p2.enable(this.ship);
             this.game.camera.follow(this.ship);
             this.ship.body.collideWorldBounds = false;
+            this.ship.checkWorldBounds = false;
 
             this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D, 'brake': Phaser.KeyCode.SPACEBAR, 'toggleCouple': Phaser.KeyCode.C });
             this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
@@ -44,9 +45,9 @@ namespace RogueVerse.Entities {
         }
         
         private getRotationToPointer() {
-            var angleToPointer = Phaser.Math.angleBetween(this.ship.x, this.ship.y, this.game.input.activePointer.x, this.game.input.activePointer.y);
+            var angleToPointer = Phaser.Math.angleBetween(this.ship.x, this.ship.y, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY);
             var deltaMouseRad = this.ship.rotation - angleToPointer - Math.PI / 2;
-  
+            
             var mod = Math.PI * 2;
             deltaMouseRad = deltaMouseRad % mod;
   

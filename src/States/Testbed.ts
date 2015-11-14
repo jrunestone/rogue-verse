@@ -11,6 +11,8 @@ namespace RogueVerse.States {
         hud: Components.Hud;
         
         create() {
+            var starfield = game.add.tileSprite(0, 0, 2000, 2000, 'starfield');
+            
             var ship = new Entities.Ship(this.game, "ship1");
             this.player = new Entities.Player(this.game, ship);
             this.hud = new Components.Hud(this.game, this.player);
