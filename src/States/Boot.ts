@@ -2,10 +2,10 @@
 
 namespace RogueVerse.States {
     export class Boot extends Phaser.State {
-        static Key = 'boot';
+        static Key = "boot";
         
         init() {
-            this.game.stage.setBackgroundColor('#fff8dc');
+            this.game.stage.setBackgroundColor("#fff8dc");
             this.game.physics.startSystem(Phaser.Physics.P2JS);
         }
         

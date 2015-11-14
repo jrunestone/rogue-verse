@@ -4,12 +4,12 @@
 
 namespace RogueVerse.States {
     export class Testbed extends Phaser.State {
-        static Key = 'testbed';
+        static Key = "testbed";
         
         player: Entities.Player;
         
         create() {
-            var ship = new Entities.Ship(this.game, 'ship1');
+            var ship = new Entities.Ship(this.game, "ship1");
             this.player = new Entities.Player(this.game, ship);
         }
         

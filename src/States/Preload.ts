@@ -2,10 +2,10 @@
 
 namespace RogueVerse.States {
     export class Preload extends Phaser.State {
-        static Key = 'preload';
+        static Key = "preload";
         
         preload() {
-            this.game.load.image('ship1', 'assets/ship1.png');
+            this.game.load.image("ship1", "assets/ship1.png");
         }
         
         create() {
