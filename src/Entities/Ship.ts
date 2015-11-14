@@ -18,34 +18,36 @@ namespace RogueVerse.Entities {
         
         strafeForward() {
             if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.body.thrust(this.Thrust);
+                this.strafe(this.body.angle, this.Thrust);
             }
         }
         
         strafeReverse() {
             if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.body.reverse(this.Thrust);
+                this.strafe(this.body.angle, -this.Thrust);
             }
         }
         
         strafeLeft() {
-            this.strafe(this.body.angle - 90);
+            if (this.getTotalSpeed() < this.MaxSpeed) {
+                this.strafe(this.body.angle - 90, this.Thrust);
+            }
         }
         
         strafeRight() {
-            this.strafe(this.body.angle + 90);
+            if (this.getTotalSpeed() < this.MaxSpeed) {
+                this.strafe(this.body.angle + 90, this.Thrust);
+            }
         }
         
-        strafe(angle: number) {
-            if (this.getTotalSpeed() < this.MaxSpeed) {
-                var magnitude = this.game.physics.p2.pxmi(-this.Thrust);
-                
-                // body.data.angle is in radians and aligned -90 by default
-                var rads = Phaser.Math.degToRad(angle + 90); 
+        strafe(angle: number, thrust: number) {
+            var magnitude = this.game.physics.p2.pxmi(-thrust);
+            
+            // body.data.angle/force is in radians and aligned -90 by default so correct for this here
+            var rads = Phaser.Math.degToRad(angle + 90); 
 
-                this.body.data.force[0] += magnitude * Math.cos(rads);
-                this.body.data.force[1] += magnitude * Math.sin(rads);
-            }
+            this.body.data.force[0] += magnitude * Math.cos(rads);
+            this.body.data.force[1] += magnitude * Math.sin(rads);
         }
         
         yaw(angle: number) {
