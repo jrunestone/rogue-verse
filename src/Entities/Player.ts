@@ -13,6 +13,8 @@ namespace RogueVerse.Entities {
 
             this.game.add.existing(this.ship);
             this.game.physics.p2.enable(this.ship);
+            this.game.camera.follow(this.ship);
+            this.ship.body.collideWorldBounds = false;
 
             this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D, 'brake': Phaser.KeyCode.SPACEBAR, 'toggleCouple': Phaser.KeyCode.C });
             this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
@@ -38,6 +40,7 @@ namespace RogueVerse.Entities {
             }
 
             this.ship.yaw(this.getRotationToPointer());
+            this.game.world.wrap(this.ship.body);
         }
         
         private getRotationToPointer() {

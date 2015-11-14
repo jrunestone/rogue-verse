@@ -12,7 +12,8 @@ namespace RogueVerse.Components {
             this.game = game;
             
             this.text = this.game.add.text(20, 20, "", {
-                font: "16px Arial"
+                font: "16px Arial",
+                fill: "#ffffff"
             });
         }
 

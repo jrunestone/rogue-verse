@@ -5,7 +5,8 @@ namespace RogueVerse.States {
         static Key = "boot";
         
         init() {
-            this.game.stage.setBackgroundColor("#fff8dc");
+            this.game.world.setBounds(0, 0, 3440, 1440);
+            this.game.stage.setBackgroundColor("#000000");
             this.game.physics.startSystem(Phaser.Physics.P2JS);
         }
         
