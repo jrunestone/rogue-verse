@@ -28,6 +28,26 @@ namespace RogueVerse.Entities {
             }
         }
         
+        strafeLeft() {
+            this.strafe(this.body.angle - 90);
+        }
+        
+        strafeRight() {
+            this.strafe(this.body.angle + 90);
+        }
+        
+        strafe(angle: number) {
+            if (this.getTotalSpeed() < this.MaxSpeed) {
+                var magnitude = this.game.physics.p2.pxmi(-this.Thrust);
+                
+                // body.data.angle is in radians and aligned -90 by default
+                var rads = Phaser.Math.degToRad(angle + 90); 
+
+                this.body.data.force[0] += magnitude * Math.cos(rads);
+                this.body.data.force[1] += magnitude * Math.sin(rads);
+            }
+        }
+        
         yaw(angle: number) {
             this.body.rotateLeft(this.TurnRate * angle);
         }

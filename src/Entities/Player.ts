@@ -29,6 +29,12 @@ namespace RogueVerse.Entities {
                 } else if (this.controls.reverse.isDown) {
                     this.ship.strafeReverse();
                 }
+                
+                if (this.controls.left.isDown) {
+                    this.ship.strafeLeft();
+                } else if (this.controls.right.isDown) {
+                    this.ship.strafeRight();
+                }
             }
 
             this.ship.yaw(this.getRotationToPointer());

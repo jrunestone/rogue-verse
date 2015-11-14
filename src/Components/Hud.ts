@@ -17,10 +17,11 @@ namespace RogueVerse.Components {
         }
 
         update() {
+            var angle = "Angle: " + Math.round(this.player.ship.body.angle);
             var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
             var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
             
-            this.text.setText(speed + "\n" + mode);
+            this.text.setText(angle + "\n" + speed + "\n" + mode);
         }
     }
 }
