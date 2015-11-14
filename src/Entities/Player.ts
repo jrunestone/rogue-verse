@@ -5,7 +5,7 @@ namespace RogueVerse.Entities {
     export class Player {
         game: Phaser.Game;
         ship: Entities.Ship;
-        controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key };
+        controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key, brake: Phaser.Key, toggleCouple: Phaser.Key };
 
         constructor(game: Phaser.Game, ship: Entities.Ship) {
             this.ship = ship;
@@ -14,14 +14,21 @@ namespace RogueVerse.Entities {
             this.game.add.existing(this.ship);
             this.game.physics.p2.enable(this.ship);
 
-            this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D });
+            this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D, 'brake': Phaser.KeyCode.SPACEBAR, 'toggleCouple': Phaser.KeyCode.C });
+            this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
         }
 
         update() {
-            if (this.controls.forward.isDown) {
-                this.ship.thrustForward();
-            } else if (this.controls.reverse.isDown) {
-                this.ship.thrustReverse();
+            if (this.controls.brake.isDown) {
+                this.ship.braking = true;
+            } else {
+                this.ship.braking = false;
+                
+                if (this.controls.forward.isDown) {
+                    this.ship.thrustForward();
+                } else if (this.controls.reverse.isDown) {
+                    this.ship.thrustReverse();
+                }
             }
 
             this.ship.yaw(this.getRotationToPointer());
@@ -32,7 +39,7 @@ namespace RogueVerse.Entities {
             var deltaMouseRad = this.ship.rotation - angleToPointer - Math.PI / 2;
   
             var mod = Math.PI * 2;
-            deltaMouseRad = deltaMouseRad % mod; 
+            deltaMouseRad = deltaMouseRad % mod;
   
             if (deltaMouseRad != deltaMouseRad % (mod / 2)) {
                 deltaMouseRad = (deltaMouseRad < 0) ? deltaMouseRad + mod : deltaMouseRad - mod;
