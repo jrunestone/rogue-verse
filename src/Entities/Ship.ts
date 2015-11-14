@@ -14,11 +14,11 @@ namespace RogueVerse.Entities {
             super(game, game.world.centerX, game.world.centerY, key);
         }
         
-        thrustForward() {
+        strafeForward() {
             this.body.thrust(this.Thrust);
         }
         
-        thrustReverse() {
+        strafeReverse() {
             this.body.reverse(this.Thrust);
         }
         

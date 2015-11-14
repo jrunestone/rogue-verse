@@ -25,9 +25,9 @@ namespace RogueVerse.Entities {
                 this.ship.braking = false;
                 
                 if (this.controls.forward.isDown) {
-                    this.ship.thrustForward();
+                    this.ship.strafeForward();
                 } else if (this.controls.reverse.isDown) {
-                    this.ship.thrustReverse();
+                    this.ship.strafeReverse();
                 }
             }
 
