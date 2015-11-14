@@ -6,6 +6,8 @@ namespace RogueVerse.Entities {
         ThrustDamping:number = 0.4;
         TurnRate: number = 50;
         BrakeRate: number = 0.9;
+        MaxSpeed: number = 200;
+        MaxSpeedDamping: number = 0.1;
         
         braking: boolean = false;
         coupled: boolean = true;
@@ -15,22 +17,34 @@ namespace RogueVerse.Entities {
         }
         
         strafeForward() {
-            this.body.thrust(this.Thrust);
+            if (this.getTotalSpeed() < this.MaxSpeed) {
+                this.body.thrust(this.Thrust);
+            }
         }
         
         strafeReverse() {
-            this.body.reverse(this.Thrust);
+            if (this.getTotalSpeed() < this.MaxSpeed) {
+                this.body.reverse(this.Thrust);
+            }
         }
         
         yaw(angle: number) {
             this.body.rotateLeft(this.TurnRate * angle);
         }
         
+        getTotalSpeed() {
+            return new Phaser.Point(this.body.velocity.x, this.body.velocity.y).getMagnitude();
+        }
+        
         update() {
             if (this.braking) {
                 this.body.damping = this.BrakeRate;
             } else {
-                this.body.damping = this.coupled ? this.ThrustDamping : 0;
+                if (this.getTotalSpeed() > this.MaxSpeed) {
+                    this.body.damping = this.MaxSpeedDamping;
+                } else {
+                    this.body.damping = this.coupled ? this.ThrustDamping : 0;
+                }
             }
         }
     }
