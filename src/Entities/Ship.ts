@@ -7,7 +7,7 @@ namespace RogueVerse.Entities {
         TurnRate: number = 50;
         BrakeRate: number = 0.9;
         MaxSpeed: number = 200;
-        MaxSpeedDamping: number = 0.1;
+        MaxSpeedDamping: number = 0.9;
         
         braking: boolean = false;
         coupled: boolean = true;
@@ -17,27 +17,19 @@ namespace RogueVerse.Entities {
         }
         
         strafeForward() {
-            if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.strafe(this.body.angle, this.Thrust);
-            }
+            this.strafe(this.body.angle, this.Thrust);
         }
         
         strafeReverse() {
-            if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.strafe(this.body.angle, -this.Thrust);
-            }
+            this.strafe(this.body.angle, -this.Thrust);
         }
         
         strafeLeft() {
-            if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.strafe(this.body.angle - 90, this.Thrust);
-            }
+            this.strafe(this.body.angle - 90, this.Thrust);
         }
         
         strafeRight() {
-            if (this.getTotalSpeed() < this.MaxSpeed) {
-                this.strafe(this.body.angle + 90, this.Thrust);
-            }
+            this.strafe(this.body.angle + 90, this.Thrust);
         }
         
         strafe(angle: number, thrust: number) {
