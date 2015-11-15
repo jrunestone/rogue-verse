@@ -5,13 +5,18 @@
 
 namespace RogueVerse.Entities.Ships {
     export class Avenger extends Entities.Ships.Ship {
-        MaxSpeed: number = 300;
+        thrustRating: number = 400;
+        thrustDamping:number = 0.4;
+        turnRate: number = 50;
+        brakeRate: number = 0.9;
+        maxSpeed: number = 200;
+        maxSpeedDamping: number = 0.9;
         
         constructor(game: Phaser.Game) {
             super("Avenger", "ships.avenger", game);
             
             this.mountPoints = [
-                new Components.MountPoint("Left wing", 0, 0, new Entities.Weapons.Badger(this.game))
+                new Components.MountPoint("Left wing", 0, 0, new Entities.Weapons.Badger(game))
             ];
             
             this.weaponGroups = [

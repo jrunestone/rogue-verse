@@ -7,7 +7,7 @@ namespace RogueVerse.Entities {
         ship: Entities.Ships.Ship;
         controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key, brake: Phaser.Key, toggleCouple: Phaser.Key, fireGroup1: Phaser.DeviceButton };
 
-        constructor(ship: Entities.Ship, game: Phaser.Game) {
+        constructor(ship: Entities.Ships.Ship, game: Phaser.Game) {
             this.ship = ship;
             this.game = game;
 

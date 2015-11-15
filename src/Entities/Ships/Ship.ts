@@ -2,20 +2,20 @@
 /// <reference path="../../Components/MountPoint"/>
 
 namespace RogueVerse.Entities.Ships {
-    export class Ship extends Phaser.Sprite {
-        Thrust: number = 400;
-        ThrustDamping:number = 0.4;
-        TurnRate: number = 50;
-        BrakeRate: number = 0.9;
-        MaxSpeed: number = 200;
-        MaxSpeedDamping: number = 0.9;
-        
+    export abstract class Ship extends Phaser.Sprite {
         name: string;
         braking: boolean;
         coupled: boolean = true;
         
-        protected mountPoints: Components.MountPoint[] = [];
-        protected weaponGroups: string[][];
+        thrustRating: number;
+        thrustDamping:number;
+        turnRate: number;
+        brakeRate: number;
+        maxSpeed: number;
+        maxSpeedDamping: number;
+        
+        mountPoints: Components.MountPoint[];
+        weaponGroups: string[][];
         
         constructor(name: string, key: string, game: Phaser.Game) {
             super(game, game.world.centerX, game.world.centerY, key);
@@ -23,19 +23,19 @@ namespace RogueVerse.Entities.Ships {
         }
         
         strafeForward() {
-            this.strafe(this.body.angle, this.Thrust);
+            this.strafe(this.body.angle, this.thrustRating);
         }
         
         strafeReverse() {
-            this.strafe(this.body.angle, -this.Thrust);
+            this.strafe(this.body.angle, -this.thrustRating);
         }
         
         strafeLeft() {
-            this.strafe(this.body.angle - 90, this.Thrust);
+            this.strafe(this.body.angle - 90, this.thrustRating);
         }
         
         strafeRight() {
-            this.strafe(this.body.angle + 90, this.Thrust);
+            this.strafe(this.body.angle + 90, this.thrustRating);
         }
         
         strafe(angle: number, thrust: number) {
@@ -49,18 +49,18 @@ namespace RogueVerse.Entities.Ships {
         }
         
         yaw(angle: number) {
-            this.body.rotateLeft(this.TurnRate * angle);
+            this.body.rotateLeft(this.turnRate * angle);
         }
         
         fire(group: number) {
             var index = group - 1;
             
-            if (this.weaponGroups.length >= group) {
+            if (this.mountPoints && this.weaponGroups && this.weaponGroups.length >= group) {
                 var weaponGroup = this.weaponGroups[index];
                 var mounts = this.mountPoints.filter(p => weaponGroup.indexOf(p.name) != -1);
                 
-                mounts.forEach((mount, i) => {
-                    console.log("fire mount", i, "weapon", mount.weapon);
+                mounts.forEach(mount => {
+                    mount.weapon.fire();
                 });
             }
         }
@@ -71,12 +71,12 @@ namespace RogueVerse.Entities.Ships {
         
         update() {
             if (this.braking) {
-                this.body.damping = this.BrakeRate;
+                this.body.damping = this.brakeRate;
             } else {
-                if (this.getTotalSpeed() > this.MaxSpeed) {
-                    this.body.damping = this.MaxSpeedDamping;
+                if (this.getTotalSpeed() > this.maxSpeed) {
+                    this.body.damping = this.maxSpeedDamping;
                 } else {
-                    this.body.damping = this.coupled ? this.ThrustDamping : 0;
+                    this.body.damping = this.coupled ? this.thrustDamping : 0;
                 }
             }
         }

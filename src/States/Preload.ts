@@ -9,7 +9,8 @@ namespace RogueVerse.States {
             this.game.load.image("bg.nebulafield", "assets/bg/nebula.jpg");
             
             this.game.load.image("ships.avenger", "assets/ships/avenger.png");
-            this.game.load.image("weapons.laser", "assets/weapons/laser.png");
+            this.game.load.image("weapons.badger", "assets/weapons/badger.png");
+            this.game.load.image("projectiles.laser", "assets/projectiles/laser.png");
         }
         
         create() {
