@@ -15,12 +15,10 @@ namespace RogueVerse.Entities.Ships {
         constructor(game: Phaser.Game) {
             super(game, "Avenger", "ships.avenger");
             
-            this.mountPoints = [
-                new Components.MountPoint("Left wing", 0, 0, new Entities.Weapons.Badger(game))
-            ];
+            this.addMountPoint(-10, 0, new Entities.Weapons.Badger(game));
             
             this.weaponGroups = [
-                ["Left wing"]
+                [0]
             ];
         }
     }

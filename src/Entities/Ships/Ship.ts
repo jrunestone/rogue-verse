@@ -1,5 +1,5 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
-/// <reference path="../../Components/MountPoint"/>
+/// <reference path="../Weapons/Weapon"/>
 
 namespace RogueVerse.Entities.Ships {
     export abstract class Ship extends Phaser.Sprite {
@@ -14,12 +14,22 @@ namespace RogueVerse.Entities.Ships {
         maxSpeed: number;
         maxSpeedDamping: number;
         
-        mountPoints: Components.MountPoint[];
-        weaponGroups: string[][];
+        mountPoints: Entities.Weapons.Weapon[] = [];
+        weaponGroups: number[][] = [];
         
         constructor(game: Phaser.Game, name: string, key: string) {
             super(game, game.world.centerX, game.world.centerY, key);
+            
             this.name = name;
+            this.game.physics.p2.enable(this);
+        }
+        
+        addMountPoint(x: number, y: number, weapon: Entities.Weapons.Weapon) {
+            weapon.body.x = x;
+            weapon.body.y = y;
+            
+            this.mountPoints.push(weapon);
+            this.addChild(weapon);
         }
         
         strafeForward() {
@@ -55,12 +65,12 @@ namespace RogueVerse.Entities.Ships {
         fire(group: number) {
             var index = group - 1;
             
-            if (this.mountPoints && this.weaponGroups && this.weaponGroups.length >= group) {
+            if (this.weaponGroups.length >= group) {
                 var weaponGroup = this.weaponGroups[index];
-                var mounts = this.mountPoints.filter(p => weaponGroup.indexOf(p.name) != -1);
+                var mounts = this.mountPoints.filter((p, i) => weaponGroup.indexOf(i) != -1);
                 
                 mounts.forEach(mount => {
-                    mount.weapon.fire();
+                    mount.fire();
                 });
             }
         }

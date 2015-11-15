@@ -12,7 +12,6 @@ namespace RogueVerse.Entities {
             this.game = game;
 
             this.game.add.existing(this.ship);
-            this.game.physics.p2.enable(this.ship);
             this.game.camera.follow(this.ship);
             this.ship.body.collideWorldBounds = false;
             this.ship.checkWorldBounds = false;
