@@ -13,7 +13,7 @@ namespace RogueVerse.Entities.Ships {
         maxSpeedDamping: number = 0.9;
         
         constructor(game: Phaser.Game) {
-            super("Avenger", "ships.avenger", game);
+            super(game, "Avenger", "ships.avenger");
             
             this.mountPoints = [
                 new Components.MountPoint("Left wing", 0, 0, new Entities.Weapons.Badger(game))

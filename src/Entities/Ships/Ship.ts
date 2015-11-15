@@ -17,7 +17,7 @@ namespace RogueVerse.Entities.Ships {
         mountPoints: Components.MountPoint[];
         weaponGroups: string[][];
         
-        constructor(name: string, key: string, game: Phaser.Game) {
+        constructor(game: Phaser.Game, name: string, key: string) {
             super(game, game.world.centerX, game.world.centerY, key);
             this.name = name;
         }

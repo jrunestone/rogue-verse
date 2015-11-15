@@ -7,9 +7,9 @@ namespace RogueVerse.Components {
         name: string;
         x: number;
         y: number;
-        weapon: Entities.Weapons.Weapon<Entities.Projectiles.Projectile>;
+        weapon: Entities.Weapons.Weapon;
         
-        constructor(name: string, x: number, y: number, weapon: Entities.Weapons.Weapon<Entities.Projectiles.Projectile>) {
+        constructor(name: string, x: number, y: number, weapon: Entities.Weapons.Weapon) {
             this.name = name;
             this.x = x;
             this.y = y;

@@ -5,8 +5,8 @@ namespace RogueVerse.Entities.Projectiles {
         damageRating: number;
         speed: number;
         
-        constructor(key: string, game: Phaser.Game) {
-            super(game, 0, 0, key);
+        constructor(game: Phaser.Game, x: number, y: number, key: string, frame?: number|string) {
+            super(game, 0, 0, key, frame);
         }
     }
 }
