@@ -2,9 +2,9 @@
 /// <reference path="Weapon"/>
 
 namespace RogueVerse.Entities.Weapons {
-    export class Laser extends Entities.Weapons.Weapon {
+    export class Badger extends Entities.Weapons.Weapon {
         constructor(game: Phaser.Game) {
-            super("Laser cannon", "weapon.laser", game);
+            super("Badger laser repeater", "weapon.badger", game);
         }
     }
 }
