@@ -8,7 +8,6 @@ namespace RogueVerse.States {
             this.game.load.image("starfield", "assets/starfield.jpg");
             this.game.load.image("nebulafield", "assets/nebula.jpg");
             this.game.load.image("ship1", "assets/ship1.png");
-            // this.game.load.shader("lights", "assets/nebula.frag");
         }
         
         create() {

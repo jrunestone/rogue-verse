@@ -12,7 +12,6 @@ namespace RogueVerse.States {
         
         starField: Phaser.TileSprite;
         nebulaField: Phaser.TileSprite;
-        // lights: Phaser.Filter;
         
         create() {
             this.starField = game.add.tileSprite(0, 0, 2000, 2000, "starfield");
@@ -27,9 +26,6 @@ namespace RogueVerse.States {
             this.player = new Entities.Player(this.game, ship);
             this.hud = new Components.Hud(this.game, this.player);
             
-            // this.lights = new Phaser.Filter(this.game, null, this.game.cache.getShader("lights"));
-            // this.lights.addToWorld(0, 0, 1280, 960);
-            
             this.starField.autoScroll(5, 0);
             this.nebulaField.autoScroll(-5, 0);
         }
@@ -37,7 +33,6 @@ namespace RogueVerse.States {
         update() {
             this.player.update();
             this.hud.update();
-            // this.lights.update();
             
             if (this.player.ship.getTotalSpeed() > 0) {
                 this.nebulaField.tilePosition.x -= this.player.ship.body.velocity.x * 0.001;
