@@ -1,11 +1,11 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
-/// <reference path="Ship"/>
+/// <reference path="Ships/Ship"/>
 
 namespace RogueVerse.Entities {
     export class Player {
         game: Phaser.Game;
-        ship: Entities.Ship;
-        controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key, brake: Phaser.Key, toggleCouple: Phaser.Key };
+        ship: Entities.Ships.Ship;
+        controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key, brake: Phaser.Key, toggleCouple: Phaser.Key, fireGroup1: Phaser.DeviceButton };
 
         constructor(game: Phaser.Game, ship: Entities.Ship) {
             this.ship = ship;
@@ -18,10 +18,15 @@ namespace RogueVerse.Entities {
             this.ship.checkWorldBounds = false;
 
             this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D, 'brake': Phaser.KeyCode.SPACEBAR, 'toggleCouple': Phaser.KeyCode.C });
+            this.controls.fireGroup1 = this.game.input.activePointer.leftButton;
             this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
         }
 
         update() {
+            if (this.controls.fireGroup1.isDown) {
+               this.ship.fire(1);
+            }
+            
             if (this.controls.brake.isDown) {
                 this.ship.braking = true;
             } else {

@@ -1,6 +1,6 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
-/// <reference path="../Entities/Ship"/>
+/// <reference path="../Entities/Ships/Avenger"/>
 /// <reference path="../Components/Hud"/>
 
 namespace RogueVerse.States {
@@ -14,11 +14,11 @@ namespace RogueVerse.States {
         nebulaField: Phaser.TileSprite;
         
         create() {
-            this.starField = game.add.tileSprite(0, 0, 2000, 2000, "starfield");
-            this.nebulaField = game.add.tileSprite(0, 0, 2000, 2000, "nebulafield");
+            this.starField = game.add.tileSprite(0, 0, 2000, 2000, "bg.starfield");
+            this.nebulaField = game.add.tileSprite(0, 0, 2000, 2000, "bg.nebulafield");
             this.nebulaField.alpha = 0.3;
             
-            var ship = new Entities.Ship(this.game, "ship1");
+            var ship = new Entities.Ships.Avenger(this.game);
             
             ship.x = this.game.world.centerX;
             ship.y = this.game.world.centerY;

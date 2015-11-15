@@ -5,9 +5,11 @@ namespace RogueVerse.States {
         static Key = "preload";
         
         preload() {
-            this.game.load.image("starfield", "assets/starfield.jpg");
-            this.game.load.image("nebulafield", "assets/nebula.jpg");
-            this.game.load.image("ship1", "assets/ship1.png");
+            this.game.load.image("bg.starfield", "assets/bg/starfield.jpg");
+            this.game.load.image("bg.nebulafield", "assets/bg/nebula.jpg");
+            
+            this.game.load.image("ships.avenger", "assets/ships/avenger.png");
+            this.game.load.image("weapons.laser", "assets/weapons/laser.png");
         }
         
         create() {
