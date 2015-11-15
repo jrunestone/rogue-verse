@@ -10,14 +10,16 @@ namespace RogueVerse.Entities.Ships {
         MaxSpeed: number = 200;
         MaxSpeedDamping: number = 0.9;
         
-        braking: boolean = false;
+        name: string;
+        braking: boolean;
         coupled: boolean = true;
         
         protected mountPoints: Components.MountPoint[] = [];
         protected weaponGroups: string[][];
         
-        constructor(game: Phaser.Game, key: string) {
+        constructor(name: string, key: string, game: Phaser.Game) {
             super(game, game.world.centerX, game.world.centerY, key);
+            this.name = name;
         }
         
         strafeForward() {

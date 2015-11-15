@@ -23,8 +23,8 @@ namespace RogueVerse.States {
             ship.x = this.game.world.centerX;
             ship.y = this.game.world.centerY;
             
-            this.player = new Entities.Player(this.game, ship);
-            this.hud = new Components.Hud(this.game, this.player);
+            this.player = new Entities.Player(ship, this.game);
+            this.hud = new Components.Hud(this.player, this.game);
             
             this.starField.autoScroll(5, 0);
             this.nebulaField.autoScroll(-5, 0);

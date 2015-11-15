@@ -4,7 +4,7 @@
 namespace RogueVerse.Entities.Weapons {
     export class Laser extends Entities.Weapons.Weapon {
         constructor(game: Phaser.Game) {
-            super(game, "weapon.laser");
+            super("Laser cannon", "weapon.laser", game);
         }
     }
 }

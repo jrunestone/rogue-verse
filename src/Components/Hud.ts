@@ -7,7 +7,7 @@ namespace RogueVerse.Components {
         player: Entities.Player;
         text: Phaser.Text;
 
-        constructor(game: Phaser.Game, player: Entities.Player) {
+        constructor(player: Entities.Player, game: Phaser.Game) {
             this.player = player;
             this.game = game;
             

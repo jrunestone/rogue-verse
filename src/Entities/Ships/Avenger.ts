@@ -8,7 +8,7 @@ namespace RogueVerse.Entities.Ships {
         MaxSpeed: number = 300;
         
         constructor(game: Phaser.Game) {
-            super(game, "ships.avenger");
+            super("Avenger", "ships.avenger", game);
             
             this.mountPoints = [
                 new Components.MountPoint("Left wing", 0, 0, new Entities.Weapons.Laser(this.game))
