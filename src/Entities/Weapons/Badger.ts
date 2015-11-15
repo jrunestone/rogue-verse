@@ -10,6 +10,7 @@ namespace RogueVerse.Entities.Weapons {
         
         constructor(game: Phaser.Game) {
             super(game, "Badger laser repeater", "weapons.badger", Entities.Projectiles.Laser);
+            
             this.scale.setTo(0.5, 0.5);
         }
     }

@@ -22,6 +22,7 @@ namespace RogueVerse.Entities.Ships {
             
             this.name = name;
             this.game.physics.p2.enable(this);
+            this.anchor.set(0.5, 0.5);
         }
         
         addMountPoint(x: number, y: number, weapon: Entities.Weapons.Weapon) {
