@@ -30,7 +30,8 @@ namespace RogueVerse.States {
             // this.lights = new Phaser.Filter(this.game, null, this.game.cache.getShader("lights"));
             // this.lights.addToWorld(0, 0, 1280, 960);
             
-            this.starField.autoScroll(10, 0);
+            this.starField.autoScroll(5, 0);
+            this.nebulaField.autoScroll(-5, 0);
         }
         
         update() {
