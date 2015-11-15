@@ -5,8 +5,13 @@ namespace RogueVerse.States {
         static Key = "boot";
         
         init() {
-            this.game.world.setBounds(0, 0, 2000, 2000);
+            
+            // this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+            this.scale.pageAlignHorizontally = true;
+            this.scale.pageAlignVertically = true;
+            
             this.game.stage.setBackgroundColor("#000000");
+            this.game.world.setBounds(0, 0, 2000, 2000);
             this.game.physics.startSystem(Phaser.Physics.P2JS);
         }
         
