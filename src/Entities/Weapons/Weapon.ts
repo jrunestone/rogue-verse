@@ -32,7 +32,7 @@ namespace RogueVerse.Entities.Weapons {
         }
         
         fire() {
-            if (this.overheated || this.game.time.elapsedSince(this.lastFireTime) < this.firingRate) {
+            if (this.overheated || this.game.time.elapsedSince(this.lastFireTime) < 1000 / this.firingRate) {
                 return;
             }
             
