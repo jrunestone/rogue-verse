@@ -35,9 +35,10 @@ namespace RogueVerse.Entities.Weapons {
             }
             
             var projectile = this.projectiles.getFirstExists(false);
-            
+
             if (projectile) {
                 projectile.reset(this.parent.x, this.parent.y);
+                projectile.lifespan = projectile.timeToLive;
 
                 // scale down and set pivot to make rotations correct
                 projectile.scale.setTo(0.5, 0.5);
