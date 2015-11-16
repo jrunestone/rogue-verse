@@ -1,6 +1,5 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="Ship"/>
-/// <reference path="../../Components/MountPoint"/>
 /// <reference path="../../Entities/Weapons/Badger"/>
 
 namespace RogueVerse.Entities.Ships {
@@ -16,10 +15,10 @@ namespace RogueVerse.Entities.Ships {
             super(game, "Avenger", "ships.avenger");
             
             this.addMountPoint(-10, 2, new Entities.Weapons.Badger(game));
-            this.addMountPoint(10, 2, new Entities.Weapons.Badger(game));
+            // this.addMountPoint(10, 2, new Entities.Weapons.Badger(game));
             
             this.weaponGroups = [
-                [0, 1]
+                [0]
             ];
         }
     }

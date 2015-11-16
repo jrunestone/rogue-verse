@@ -10,6 +10,8 @@ namespace RogueVerse.Entities.Weapons {
         overheatTime: number;
         overheatCooldown: number;
         
+        lastFireTime: number;
+        
         constructor(game: Phaser.Game, name: string, weaponKey: string, projectileType: any) {
             super(game, 0, 0, weaponKey);
             
@@ -28,6 +30,10 @@ namespace RogueVerse.Entities.Weapons {
         }
         
         fire() {
+            if (this.game.time.elapsedSince(this.lastFireTime) < 1000 / this.firingRate) {
+                return;
+            }
+            
             var projectile = this.projectiles.getFirstExists(false);
             
             if (projectile) {
@@ -35,7 +41,7 @@ namespace RogueVerse.Entities.Weapons {
 
                 // scale down and set pivot to make rotations correct
                 projectile.scale.setTo(0.5, 0.5);
-                projectile.pivot.setTo(this.x * 2, 0);
+                projectile.pivot.setTo(-this.x * 2, 10);
                 projectile.body.angle = (<Phaser.Sprite>this.parent).body.angle;
 
                 // body.angle is per default oriented -90 degrees
@@ -44,6 +50,8 @@ namespace RogueVerse.Entities.Weapons {
                 projectile.body.velocity.x = velocity.x;
                 projectile.body.velocity.y = velocity.y;
             }
+            
+            this.lastFireTime = game.time.time;
         }
     }
 }
