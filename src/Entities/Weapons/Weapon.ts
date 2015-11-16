@@ -45,7 +45,7 @@ namespace RogueVerse.Entities.Weapons {
                 projectile.body.angle = (<Phaser.Sprite>this.parent).body.angle;
 
                 // body.angle is per default oriented -90 degrees
-                var velocity = this.game.physics.arcade.velocityFromAngle(projectile.body.angle - 90, 600);
+                var velocity = this.game.physics.arcade.velocityFromAngle(projectile.body.angle - 90, projectile.speed);
 
                 projectile.body.velocity.x = velocity.x;
                 projectile.body.velocity.y = velocity.y;

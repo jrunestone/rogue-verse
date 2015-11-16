@@ -4,7 +4,7 @@
 namespace RogueVerse.Entities.Projectiles {
     export class Laser extends Entities.Projectiles.Projectile {
         damageRating: number = 100;
-        speed: number = 300;
+        speed: number = 800;
         lifespan: number = 4000;
         
         constructor(game: Phaser.Game, x: number, y: number, key: string, frame?: number|string) {
