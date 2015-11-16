@@ -5,7 +5,17 @@ namespace RogueVerse.Entities {
     export class Player {
         game: Phaser.Game;
         ship: Entities.Ships.Ship;
-        controls: { forward: Phaser.Key, reverse: Phaser.Key, left: Phaser.Key, right: Phaser.Key, brake: Phaser.Key, toggleCouple: Phaser.Key, fireGroup1: Phaser.DeviceButton };
+        
+        controls: {
+            forward: Phaser.Key,
+            reverse: Phaser.Key,
+            left: Phaser.Key,
+            right: Phaser.Key, 
+            brake: Phaser.Key, 
+            toggleCouple: Phaser.Key,
+            boost: Phaser.Key, 
+            fireGroup1: Phaser.DeviceButton
+        };
 
         constructor(game: Phaser.Game, ship: Entities.Ships.Ship) {
             this.ship = ship;
@@ -16,7 +26,16 @@ namespace RogueVerse.Entities {
             this.ship.body.collideWorldBounds = false;
             this.ship.checkWorldBounds = false;
 
-            this.controls = this.game.input.keyboard.addKeys({ 'forward': Phaser.KeyCode.W, 'reverse': Phaser.KeyCode.S, 'left': Phaser.KeyCode.A, 'right': Phaser.KeyCode.D, 'brake': Phaser.KeyCode.SPACEBAR, 'toggleCouple': Phaser.KeyCode.C });
+            this.controls = this.game.input.keyboard.addKeys({
+                "forward": Phaser.KeyCode.W,
+                "reverse": Phaser.KeyCode.S,
+                "left": Phaser.KeyCode.A,
+                "right": Phaser.KeyCode.D,
+                "brake": Phaser.KeyCode.SPACEBAR,
+                "toggleCouple": Phaser.KeyCode.C,
+                "boost": Phaser.KeyCode.SHIFT
+            });
+            
             this.controls.fireGroup1 = this.game.input.activePointer.leftButton;
             this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
         }
@@ -41,6 +60,12 @@ namespace RogueVerse.Entities {
                     this.ship.strafeLeft();
                 } else if (this.controls.right.isDown) {
                     this.ship.strafeRight();
+                }
+                
+                if (this.controls.boost.isDown) {
+                    this.ship.boosting = true;
+                } else {
+                    this.ship.boosting = false;
                 }
             }
 

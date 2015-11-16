@@ -68,8 +68,6 @@ namespace RogueVerse.Entities.Weapons {
             } else {
                 this.overheated = false;
             }
-            
-            this.game.debug.text("Overheat timer: " + Math.round(this.overheatTimer) + (this.overheated ? (" (OVERHEATED!)") : ""), 0, 300);
         }
     }
 }

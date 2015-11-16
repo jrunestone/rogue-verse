@@ -4,15 +4,18 @@
 namespace RogueVerse.Entities.Ships {
     export abstract class Ship extends Phaser.Sprite {
         name: string;
-        braking: boolean;
-        coupled: boolean = true;
         
         thrustRating: number;
         thrustDamping:number;
         turnRate: number;
         brakeRate: number;
         maxSpeed: number;
+        boostFactor: number;
         maxSpeedDamping: number;
+        
+        braking: boolean;
+        boosting: boolean;
+        coupled: boolean = true;
         
         mountPoints: Entities.Weapons.Weapon[] = [];
         weaponGroups: number[][] = [];
@@ -63,7 +66,7 @@ namespace RogueVerse.Entities.Ships {
             this.body.rotateLeft(this.turnRate * angle);
         }
         
-        fire(group: number) {            
+        fire(group: number) {
             var index = group - 1;
             
             if (this.weaponGroups.length >= group) {
@@ -81,10 +84,12 @@ namespace RogueVerse.Entities.Ships {
         }
         
         update() {
+            var maxSpeed = this.boosting ? (this.maxSpeed * this.boostFactor) : this.maxSpeed;
+            
             if (this.braking) {
                 this.body.damping = this.brakeRate;
             } else {
-                if (this.getTotalSpeed() > this.maxSpeed) {
+                if (this.getTotalSpeed() > maxSpeed) {
                     this.body.damping = this.maxSpeedDamping;
                 } else {
                     this.body.damping = this.coupled ? this.thrustDamping : 0;

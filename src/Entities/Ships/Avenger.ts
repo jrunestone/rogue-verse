@@ -9,6 +9,7 @@ namespace RogueVerse.Entities.Ships {
         turnRate: number = 50;
         brakeRate: number = 0.9;
         maxSpeed: number = 200;
+        boostFactor: number = 1.4;
         maxSpeedDamping: number = 0.9;
 
         constructor(game: Phaser.Game) {
