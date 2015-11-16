@@ -11,7 +11,7 @@ namespace RogueVerse.Entities.Weapons {
         cooldownTime: number = 1000;
         
         lastFireTime: number;
-        overheatTimer: number;
+        overheatTimer: number = 0;
         overheated: boolean;
         
         constructor(game: Phaser.Game, name: string, weaponKey: string, projectileType: any) {
@@ -59,19 +59,17 @@ namespace RogueVerse.Entities.Weapons {
         }
         
         update() {
-            console.log('weapon update');
-            
             if (this.overheatTimer >= this.cooldownTime) {
                 this.overheated = true;
-            } else {
-                this.overheated = false;
             }
             
             if (this.overheatTimer > 0) {
                 this.overheatTimer -= this.game.time.elapsedMS;
+            } else {
+                this.overheated = false;
             }
             
-            this.game.debug.text("Overheat timer: " + this.overheatTimer, 0, 300);
+            this.game.debug.text("Overheat timer: " + this.overheatTimer + (this.overheated ? (" (OVERHEATED!)") : ""), 0, 300);
         }
     }
 }

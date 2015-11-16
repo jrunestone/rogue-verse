@@ -90,6 +90,9 @@ namespace RogueVerse.Entities.Ships {
                     this.body.damping = this.coupled ? this.thrustDamping : 0;
                 }
             }
+            
+            //TODO: hack
+            this.children.forEach(c => c.update());
         }
     }
 }
