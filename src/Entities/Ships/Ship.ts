@@ -91,8 +91,12 @@ namespace RogueVerse.Entities.Ships {
                 }
             }
             
-            //TODO: hack
-            this.children.forEach(c => c.update());
+            // sprite children are not updated automatically
+            this.children.forEach(child => {
+                if (child instanceof Phaser.Sprite) {
+                    (<Phaser.Sprite>child).update();
+                }
+            });
         }
     }
 }

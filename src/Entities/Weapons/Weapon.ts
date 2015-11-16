@@ -54,7 +54,7 @@ namespace RogueVerse.Entities.Weapons {
                 projectile.body.velocity.y = velocity.y;
             }
 
-            this.overheatTimer += this.overheatFactor * this.cooldownTime;
+            this.overheatTimer = Math.min(this.cooldownTime, this.overheatTimer + this.overheatFactor * this.cooldownTime);
             this.lastFireTime = game.time.time;
         }
         
@@ -64,12 +64,12 @@ namespace RogueVerse.Entities.Weapons {
             }
             
             if (this.overheatTimer > 0) {
-                this.overheatTimer -= this.game.time.elapsedMS;
+                this.overheatTimer = Math.max(0, this.overheatTimer - game.time.physicsElapsedMS);
             } else {
                 this.overheated = false;
             }
             
-            this.game.debug.text("Overheat timer: " + this.overheatTimer + (this.overheated ? (" (OVERHEATED!)") : ""), 0, 300);
+            this.game.debug.text("Overheat timer: " + Math.round(this.overheatTimer) + (this.overheated ? (" (OVERHEATED!)") : ""), 0, 300);
         }
     }
 }
