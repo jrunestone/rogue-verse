@@ -15,10 +15,10 @@ namespace RogueVerse.Entities.Ships {
             super(game, "Avenger", "ships.avenger");
             
             this.addMountPoint(-10, 2, new Entities.Weapons.Badger(game));
-            // this.addMountPoint(10, 2, new Entities.Weapons.Badger(game));
+            this.addMountPoint(10, 2, new Entities.Weapons.Badger(game));
             
             this.weaponGroups = [
-                [0]
+                [0, 1]
             ];
         }
     }
