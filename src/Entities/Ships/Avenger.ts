@@ -10,7 +10,7 @@ namespace RogueVerse.Entities.Ships {
         brakeRate: number = 0.9;
         maxSpeed: number = 200;
         maxSpeedDamping: number = 0.9;
-        
+
         constructor(game: Phaser.Game) {
             super(game, "Avenger", "ships.avenger");
             

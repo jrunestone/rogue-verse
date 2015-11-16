@@ -7,10 +7,12 @@ namespace RogueVerse.Entities.Weapons {
         projectiles: Phaser.Group;
         
         firingRate: number;
-        overheatTime: number;
-        overheatCooldown: number;
+        overheatFactor: number;
+        cooldownTime: number = 1000;
         
         lastFireTime: number;
+        overheatTimer: number;
+        overheated: boolean;
         
         constructor(game: Phaser.Game, name: string, weaponKey: string, projectileType: any) {
             super(game, 0, 0, weaponKey);
@@ -19,7 +21,7 @@ namespace RogueVerse.Entities.Weapons {
             
             this.projectiles = this.game.add.physicsGroup(Phaser.Physics.P2JS);
             this.projectiles.classType = projectileType;
-            this.projectiles.createMultiple(10, null, null, false);
+            this.projectiles.createMultiple(20, null, null, false);
             
             this.projectiles.setAll("body.kinematic", true);
             this.projectiles.setAll("checkWorldBounds", true);
@@ -30,7 +32,7 @@ namespace RogueVerse.Entities.Weapons {
         }
         
         fire() {
-            if (this.game.time.elapsedSince(this.lastFireTime) < 1000 / this.firingRate) {
+            if (this.overheated || this.game.time.elapsedSince(this.lastFireTime) < this.firingRate) {
                 return;
             }
             
@@ -51,8 +53,25 @@ namespace RogueVerse.Entities.Weapons {
                 projectile.body.velocity.x = velocity.x;
                 projectile.body.velocity.y = velocity.y;
             }
-            
+
+            this.overheatTimer += this.overheatFactor * this.cooldownTime;
             this.lastFireTime = game.time.time;
+        }
+        
+        update() {
+            console.log('weapon update');
+            
+            if (this.overheatTimer >= this.cooldownTime) {
+                this.overheated = true;
+            } else {
+                this.overheated = false;
+            }
+            
+            if (this.overheatTimer > 0) {
+                this.overheatTimer -= this.game.time.elapsedMS;
+            }
+            
+            this.game.debug.text("Overheat timer: " + this.overheatTimer, 0, 300);
         }
     }
 }

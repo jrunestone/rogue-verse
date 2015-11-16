@@ -63,7 +63,7 @@ namespace RogueVerse.Entities.Ships {
             this.body.rotateLeft(this.turnRate * angle);
         }
         
-        fire(group: number) {
+        fire(group: number) {            
             var index = group - 1;
             
             if (this.weaponGroups.length >= group) {
