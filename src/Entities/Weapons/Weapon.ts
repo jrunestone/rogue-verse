@@ -8,7 +8,7 @@ namespace RogueVerse.Entities.Weapons {
         
         firingRate: number;
         overheatFactor: number;
-        cooldownTime: number = 1000;
+        cooldownTime: number;
         
         lastFireTime: number;
         overheatTimer: number = 0;

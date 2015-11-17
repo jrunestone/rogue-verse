@@ -5,7 +5,8 @@
 namespace RogueVerse.Entities.Weapons {
     export class Badger extends Entities.Weapons.Weapon {
         firingRate: number = 10;
-        overheatFactor: number = 0.2;
+        overheatFactor: number = 0.1;
+        cooldownTime: number = 3000;
         
         constructor(game: Phaser.Game) {
             super(game, "Badger laser repeater", "weapons.badger", Entities.Projectiles.Laser);
