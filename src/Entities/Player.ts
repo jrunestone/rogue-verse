@@ -49,24 +49,29 @@ namespace RogueVerse.Entities {
                 this.ship.braking = true;
             } else {
                 this.ship.braking = false;
+                var strafing = false;
                 
                 if (this.controls.forward.isDown) {
                     this.ship.strafeForward();
+                    strafing = true;
                 } else if (this.controls.reverse.isDown) {
                     this.ship.strafeReverse();
+                    strafing = true;
                 }
                 
                 if (this.controls.left.isDown) {
                     this.ship.strafeLeft();
+                    strafing = true;
                 } else if (this.controls.right.isDown) {
                     this.ship.strafeRight();
+                    strafing = true;
                 }
-                
-                if (this.controls.boost.isDown) {
-                    this.ship.boosting = true;
-                } else {
-                    this.ship.boosting = false;
-                }
+            }
+            
+            if (this.controls.boost.isDown && (strafing || this.ship.braking)) {
+                this.ship.boosting = true;
+            } else {
+                this.ship.boosting = false;
             }
 
             this.ship.yaw(this.getRotationToPointer());

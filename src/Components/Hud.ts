@@ -26,9 +26,10 @@ namespace RogueVerse.Components {
             var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
             var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
             var pos = "Position: " + Math.round(this.player.ship.x) + ", " + Math.round(this.player.ship.y);
-            var boost = this.player.ship.boosting ? "BOOST" : "";
+            var fuel = "Boost fuel: " + Math.round(this.player.ship.boostFuel) + "/" + this.player.ship.boostFuelCapacity;
+            var boost = this.player.ship.boosting ? " BOOST" : "";
             
-            this.text.setText(fps + "\n" + angle + "\n" + speed + "\n" + pos + "\n" + mode + "\n" + boost);
+            this.text.setText(fps + "\n" + angle + "\n" + speed + "\n" + pos + "\n" + mode + "\n" + fuel + boost);
         }
     }
 }

@@ -6,12 +6,15 @@ namespace RogueVerse.Entities.Ships {
         name: string;
         
         thrustRating: number;
-        thrustDamping:number;
+        thrustDamping: number;
         turnRate: number;
         brakeRate: number;
         maxSpeed: number;
-        boostFactor: number;
         maxSpeedDamping: number;
+        boostFactor: number;
+        boostFuelCapacity: number;
+        boostFuel: number;
+        boostBrakeRate: number;
         
         braking: boolean;
         boosting: boolean;
@@ -53,6 +56,10 @@ namespace RogueVerse.Entities.Ships {
         }
         
         strafe(angle: number, thrust: number) {
+            if (this.boosting && this.boostFuel > 0) {
+                thrust *= this.boostFactor;
+            }
+            
             var magnitude = this.game.physics.p2.pxmi(-thrust);
             
             // body.data.angle/force is in radians and aligned -90 by default so correct for this here
@@ -84,10 +91,20 @@ namespace RogueVerse.Entities.Ships {
         }
         
         update() {
-            var maxSpeed = this.boosting ? (this.maxSpeed * this.boostFactor) : this.maxSpeed;
+            var maxSpeed = this.maxSpeed;
+            var brakeRate = this.brakeRate;
+            
+            if (this.boosting && this.boostFuel > 0) {
+                maxSpeed = this.maxSpeed * this.boostFactor;
+                brakeRate = this.boostBrakeRate;
+                
+                this.boostFuel = Math.max(0, this.boostFuel - game.time.physicsElapsedMS)
+            } else if (!this.boosting) {
+                this.boostFuel = Math.min(this.boostFuelCapacity, this.boostFuel + game.time.physicsElapsedMS / 2);
+            }
             
             if (this.braking) {
-                this.body.damping = this.brakeRate;
+                this.body.damping = brakeRate;
             } else {
                 if (this.getTotalSpeed() > maxSpeed) {
                     this.body.damping = this.maxSpeedDamping;
