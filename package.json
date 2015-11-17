@@ -1,7 +1,11 @@
 {
   "name": "rogue-verse",
+  "description": "A 2d multiplayer Star Citizen tribute space shooter.",
+  "version": "0.0.1",
+  "author": "Johan Johansson",
+  "homepage": "https://github.com/swemaniac/rogue-verse",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "http-server": "^0.8.5",
     "phaser": "^2.4.4"
   },
