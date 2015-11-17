@@ -29,7 +29,11 @@ namespace RogueVerse.Components {
             var fuel = "Boost fuel: " + Math.round(this.player.ship.boostFuel) + "/" + this.player.ship.boostFuelCapacity;
             var boost = this.player.ship.boosting ? " BOOST" : "";
             
-            this.text.setText(fps + "\n" + angle + "\n" + speed + "\n" + pos + "\n" + mode + "\n" + fuel + boost);
+            var weapons: string[] = this.player.ship.mountPoints.map(mount => {
+                return mount.name + ": " + Math.round(mount.overheatTimer) + "/" + mount.cooldownTime + (mount.overheated ? " OVERHEATED" : "");
+            });
+            
+            this.text.setText(fps + "\n" + angle + "\n" + speed + "\n" + pos + "\n" + mode + "\n" + fuel + boost + "\n" + weapons.join("\n"));
         }
     }
 }
