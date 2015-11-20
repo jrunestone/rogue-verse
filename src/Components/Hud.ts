@@ -22,7 +22,7 @@ namespace RogueVerse.Components {
 
         update() {
             var fps = this.game.time.fps.toString();
-            var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed()) + "/";
+            var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
             var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
             var pos = "Position: " + Math.round(this.player.ship.x) + ", " + Math.round(this.player.ship.y);
             var fuel = "Boost fuel: " + Math.round(this.player.ship.boostFuel) + "/" + this.player.ship.boostFuelCapacity;

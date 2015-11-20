@@ -5,15 +5,15 @@ namespace RogueVerse.Entities {
     export class Player {
         game: Phaser.Game;
         ship: Entities.Ships.Ship;
-        
+
         controls: {
             forward: Phaser.Key,
             reverse: Phaser.Key,
             left: Phaser.Key,
-            right: Phaser.Key, 
-            brake: Phaser.Key, 
+            right: Phaser.Key,
+            brake: Phaser.Key,
             toggleCouple: Phaser.Key,
-            boost: Phaser.Key, 
+            boost: Phaser.Key,
             fireGroup1: Phaser.DeviceButton
         };
 
@@ -35,7 +35,7 @@ namespace RogueVerse.Entities {
                 "toggleCouple": Phaser.KeyCode.C,
                 "boost": Phaser.KeyCode.SHIFT
             });
-            
+
             this.controls.fireGroup1 = this.game.input.activePointer.leftButton;
             this.controls.toggleCouple.onDown.add(() => this.ship.coupled = !this.ship.coupled);
         }
@@ -44,13 +44,13 @@ namespace RogueVerse.Entities {
             if (this.controls.fireGroup1.isDown) {
                this.ship.fire(1);
             }
-            
+
             if (this.controls.brake.isDown) {
                 this.ship.braking = true;
             } else {
                 this.ship.braking = false;
                 var strafing = false;
-                
+
                 if (this.controls.forward.isDown) {
                     this.ship.strafeForward();
                     strafing = true;
@@ -58,7 +58,7 @@ namespace RogueVerse.Entities {
                     this.ship.strafeReverse();
                     strafing = true;
                 }
-                
+
                 if (this.controls.left.isDown) {
                     this.ship.strafeLeft();
                     strafing = true;
@@ -67,7 +67,7 @@ namespace RogueVerse.Entities {
                     strafing = true;
                 }
             }
-            
+
             if (this.controls.boost.isDown && (strafing || this.ship.braking)) {
                 this.ship.boosting = true;
             } else {
@@ -75,20 +75,19 @@ namespace RogueVerse.Entities {
             }
 
             this.ship.yaw(this.getRotationToPointer());
-            this.game.world.wrap(this.ship.body);
         }
-        
+
         private getRotationToPointer() {
             var angleToPointer = Phaser.Math.angleBetween(this.ship.x, this.ship.y, this.game.input.activePointer.worldX, this.game.input.activePointer.worldY);
             var deltaMouseRad = this.ship.rotation - angleToPointer - Math.PI / 2;
-            
+
             var mod = Math.PI * 2;
             deltaMouseRad = deltaMouseRad % mod;
-  
+
             if (deltaMouseRad != deltaMouseRad % (mod / 2)) {
                 deltaMouseRad = (deltaMouseRad < 0) ? deltaMouseRad + mod : deltaMouseRad - mod;
             }
-            
+
             return deltaMouseRad;
         }
     }
