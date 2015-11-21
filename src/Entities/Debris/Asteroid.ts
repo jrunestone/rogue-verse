@@ -17,6 +17,7 @@ namespace RogueVerse.Entities.Debris {
             this.scale.setTo(scale);
 
             this.game.physics.p2.enable(this);
+            this.body.setCircle(this.width / 2);
             this.body.setCollisionGroup(Asteroid.collisionGroup);
 
             this.checkWorldBounds = false;
