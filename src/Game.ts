@@ -5,13 +5,15 @@
 
 namespace RogueVerse {
     export class Game extends Phaser.Game {
+        setupCollisions: Phaser.Signal = new Phaser.Signal();
+
         constructor() {
             super(1280, 960, Phaser.AUTO);
 
             this.state.add(States.Boot.Key, States.Boot);
             this.state.add(States.Preload.Key, States.Preload);
             this.state.add(States.Testbed.Key, States.Testbed);
-            
+
             this.state.start(States.Boot.Key);
         }
     }

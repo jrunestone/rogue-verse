@@ -11,10 +11,8 @@ namespace RogueVerse.States {
 
         player: Entities.Player;
         hud: Components.Hud;
-
         starField: Phaser.TileSprite;
         nebulaField: Phaser.TileSprite;
-
         asteroids: Phaser.Group;
 
         create() {
@@ -33,12 +31,11 @@ namespace RogueVerse.States {
             this.player = new Entities.Player(this.game, ship);
             this.hud = new Components.Hud(this.game, this.player);
 
-            this.asteroids = this.game.add.physicsGroup(Phaser.Physics.P2JS);
+            this.asteroids = this.game.add.group();
             this.asteroids.classType = Entities.Debris.Asteroid;
             this.asteroids.createMultiple(10, "asteroids.1", null, true);
 
-            this.player.ship.body.collides(Entities.Debris.Asteroid.collisionGroup);
-            this.asteroids.forEach((a: Phaser.Sprite) => a.body.collides([Entities.Debris.Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup]));
+            (<RogueVerse.Game>this.game).setupCollisions.dispatch();
         }
 
         update() {

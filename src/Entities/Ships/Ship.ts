@@ -1,5 +1,7 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Weapons/Weapon"/>
+/// <reference path="../Debris/Asteroid"/>
+/// <reference path="../Projectiles/Projectile"/>
 
 namespace RogueVerse.Entities.Ships {
     export abstract class Ship extends Phaser.Sprite {
@@ -33,11 +35,16 @@ namespace RogueVerse.Entities.Ships {
             }
 
             this.name = name;
+            this.anchor.set(0.5, 0.5);
 
             this.game.physics.p2.enable(this);
             this.body.setCollisionGroup(Ship.collisionGroup);
 
-            this.anchor.set(0.5, 0.5);
+            (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
+        }
+
+        setupCollisions() {
+            this.body.collides(Entities.Debris.Asteroid.collisionGroup);
         }
 
         addMountPoint(x: number, y: number, weapon: Entities.Weapons.Weapon) {

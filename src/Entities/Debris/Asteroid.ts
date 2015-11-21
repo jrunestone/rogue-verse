@@ -1,4 +1,6 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../Ships/Ship"/>
+/// <reference path="../Projectiles/Projectile"/>
 
 namespace RogueVerse.Entities.Debris {
     export class Asteroid extends Phaser.Sprite {
@@ -31,6 +33,12 @@ namespace RogueVerse.Entities.Debris {
 
             this.body.damping = 0;
             this.body.angularDamping = 0;
+
+            (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
+        }
+
+        setupCollisions() {
+            this.body.collides([Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup, Entities.Projectiles.Projectile]);
         }
 
         update() {

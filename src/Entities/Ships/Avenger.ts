@@ -17,16 +17,16 @@ namespace RogueVerse.Entities.Ships {
 
         constructor(game: Phaser.Game) {
             super(game, "Avenger", "ships.avenger");
-            
+
             this.body.mass = 1.0;
-            
+
             this.addMountPoint(-10, 2, new Entities.Weapons.Badger(game));
             this.addMountPoint(10, 2, new Entities.Weapons.Badger(game));
-            
+
             this.weaponGroups = [
                 [0, 1]
             ];
-            
+
         }
     }
 }

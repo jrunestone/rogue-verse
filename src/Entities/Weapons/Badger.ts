@@ -7,7 +7,7 @@ namespace RogueVerse.Entities.Weapons {
         firingRate: number = 10;
         overheatFactor: number = 0.1;
         cooldownTime: number = 3000;
-        
+
         constructor(game: Phaser.Game) {
             super(game, "Badger laser repeater", "weapons.badger", Entities.Projectiles.Laser);
             this.scale.setTo(0.5, 0.5);
