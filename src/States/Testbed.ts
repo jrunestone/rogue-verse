@@ -1,5 +1,6 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
+/// <reference path="../Entities/Ships/Ship"/>
 /// <reference path="../Entities/Ships/Avenger"/>
 /// <reference path="../Entities/Debris/Asteroid"/>
 /// <reference path="../Components/Hud"/>
@@ -18,8 +19,11 @@ namespace RogueVerse.States {
 
         create() {
             this.starField = game.add.tileSprite(0, 0, 2000, 2000, "bg.starfield");
+            this.starField.autoScroll(5, 0);
+
             this.nebulaField = game.add.tileSprite(0, 0, 2000, 2000, "bg.nebulafield");
             this.nebulaField.alpha = 0.3;
+            this.nebulaField.autoScroll(-5, 0);
 
             var ship = new Entities.Ships.Avenger(this.game);
 
@@ -29,12 +33,12 @@ namespace RogueVerse.States {
             this.player = new Entities.Player(this.game, ship);
             this.hud = new Components.Hud(this.game, this.player);
 
-            this.starField.autoScroll(5, 0);
-            this.nebulaField.autoScroll(-5, 0);
-
             this.asteroids = this.game.add.physicsGroup(Phaser.Physics.P2JS);
             this.asteroids.classType = Entities.Debris.Asteroid;
             this.asteroids.createMultiple(10, "asteroids.1", null, true);
+
+            this.player.ship.body.collides(Entities.Debris.Asteroid.collisionGroup);
+            this.asteroids.forEach((a: Phaser.Sprite) => a.body.collides([Entities.Debris.Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup]));
         }
 
         update() {

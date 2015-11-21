@@ -23,11 +23,20 @@ namespace RogueVerse.Entities.Ships {
         mountPoints: Entities.Weapons.Weapon[] = [];
         weaponGroups: number[][] = [];
 
+        static collisionGroup: Phaser.Physics.P2.CollisionGroup;
+
         constructor(game: Phaser.Game, name: string, key: string) {
             super(game, game.world.centerX, game.world.centerY, key);
 
+            if (!Ship.collisionGroup) {
+                Ship.collisionGroup = this.game.physics.p2.createCollisionGroup();
+            }
+
             this.name = name;
+
             this.game.physics.p2.enable(this);
+            this.body.setCollisionGroup(Ship.collisionGroup);
+
             this.anchor.set(0.5, 0.5);
         }
 
