@@ -38,7 +38,7 @@ namespace RogueVerse.Entities.Debris {
         }
 
         setupCollisions() {
-            this.body.collides([Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup, Entities.Projectiles.Projectile]);
+            this.body.collides([Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup, Entities.Projectiles.Projectile.collisionGroup]);
         }
 
         update() {

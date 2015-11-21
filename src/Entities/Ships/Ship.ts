@@ -1,7 +1,6 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Weapons/Weapon"/>
 /// <reference path="../Debris/Asteroid"/>
-/// <reference path="../Projectiles/Projectile"/>
 
 namespace RogueVerse.Entities.Ships {
     export abstract class Ship extends Phaser.Sprite {
