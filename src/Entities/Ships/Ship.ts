@@ -37,7 +37,10 @@ namespace RogueVerse.Entities.Ships {
             this.anchor.set(0.5, 0.5);
 
             this.game.physics.p2.enable(this);
+            this.body.setCircle(this.width / 2);
             this.body.setCollisionGroup(Ship.collisionGroup);
+            this.body.collideWorldBounds = false;
+            this.checkWorldBounds = false;
 
             (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
         }

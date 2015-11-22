@@ -23,8 +23,6 @@ namespace RogueVerse.Entities {
 
             this.game.add.existing(this.ship);
             this.game.camera.follow(this.ship);
-            this.ship.body.collideWorldBounds = false;
-            this.ship.checkWorldBounds = false;
 
             this.controls = this.game.input.keyboard.addKeys({
                 "forward": Phaser.KeyCode.W,
