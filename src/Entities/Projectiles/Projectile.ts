@@ -19,6 +19,7 @@ namespace RogueVerse.Entities.Projectiles {
 
             this.game.physics.p2.enable(this);
             this.body.setCollisionGroup(Projectile.collisionGroup);
+            this.body.data.shapes[0].sensor = true;
 
             this.checkWorldBounds = true;
             this.outOfBoundsKill = true;
@@ -29,6 +30,11 @@ namespace RogueVerse.Entities.Projectiles {
 
         setupCollisions() {
             this.body.collides(Entities.Debris.Asteroid.collisionGroup);
+            this.body.onBeginContact.add(this.collide, this);
+        }
+
+        collide(body1: Phaser.Physics.P2.Body, body2: Phaser.Physics.P2.Body, shape1: any, shape2: any, contactEquation: any) {
+            this.kill();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace RogueVerse.Entities.Debris {
                 Asteroid.collisionGroup = this.game.physics.p2.createCollisionGroup();
             }
 
-            var scale = 0.2 + Math.random() * 1;
+            var scale = this.game.rnd.realInRange(0.2, 1.2);
             this.scale.setTo(scale);
 
             this.game.physics.p2.enable(this);
@@ -26,11 +26,11 @@ namespace RogueVerse.Entities.Debris {
 
             this.body.x = this.game.world.randomX;
             this.body.y = this.game.world.randomY;
-            this.body.mass = 5;
+            this.body.mass = 5 + scale;
 
-            this.body.angularVelocity = -1 + Math.random() * 2;
-            this.body.velocity.x = -100 + Math.random() * 200;
-            this.body.velocity.y = -100 + Math.random() * 200;
+            this.body.angularVelocity = this.game.rnd.realInRange(-1, 1);
+            this.body.velocity.x = this.game.rnd.realInRange(-100, 100);
+            this.body.velocity.y = this.game.rnd.realInRange(-100, 100);
 
             this.body.damping = 0;
             this.body.angularDamping = 0;
