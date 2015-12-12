@@ -7,6 +7,7 @@ namespace RogueVerse.Entities.Projectiles {
         damageRating: number;
         speed: number;
         timeToLive: number;
+        impactEmitter: Phaser.Particles.Arcade.Emitter;
 
         static collisionGroup: Phaser.Physics.P2.CollisionGroup;
 
@@ -25,6 +26,12 @@ namespace RogueVerse.Entities.Projectiles {
             this.outOfBoundsKill = true;
             this.body.collideWorldBounds = false;
 
+            this.impactEmitter = this.game.add.emitter(0, 0, 100);
+            this.impactEmitter.makeParticles("particles.impact", [0, 1, 2, 3, 4, 5, 6, 7, 8], 9, true);
+            this.impactEmitter.gravity = 0;
+            this.impactEmitter.minParticleScale = 0.1;
+            this.impactEmitter.maxParticleScale = 0.1;
+
             (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
         }
 
@@ -34,6 +41,12 @@ namespace RogueVerse.Entities.Projectiles {
         }
 
         collide(body1: Phaser.Physics.P2.Body, body2: Phaser.Physics.P2.Body, shape1: any, shape2: any, contactEquation: any) {
+            var impactAngle = this.game.physics.arcade.angleBetween(body1, this);
+
+            this.impactEmitter.position.x = this.x - this.width * 1.5 * Math.cos(impactAngle);
+            this.impactEmitter.position.y = this.y - this.height * 1.5 * Math.sin(impactAngle);
+            this.impactEmitter.explode(200, 4);
+
             this.kill();
         }
     }

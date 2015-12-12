@@ -23,6 +23,10 @@ namespace RogueVerse.States {
             this.nebulaField.alpha = 0.3;
             this.nebulaField.autoScroll(-5, 0);
 
+            this.asteroids = this.game.add.group();
+            this.asteroids.classType = Entities.Debris.Asteroid;
+            this.asteroids.createMultiple(10, "asteroids.1", null, true);
+
             var ship = new Entities.Ships.Avenger(this.game);
 
             ship.x = this.game.world.centerX;
@@ -30,10 +34,6 @@ namespace RogueVerse.States {
 
             this.player = new Entities.Player(this.game, ship);
             this.hud = new Components.Hud(this.game, this.player);
-
-            this.asteroids = this.game.add.group();
-            this.asteroids.classType = Entities.Debris.Asteroid;
-            this.asteroids.createMultiple(10, "asteroids.1", null, true);
 
             (<RogueVerse.Game>this.game).setupCollisions.dispatch();
         }
