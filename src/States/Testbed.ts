@@ -56,7 +56,7 @@ namespace RogueVerse.States {
 
             var filter = new Phaser.Filter(this.game, uniforms, this.game.cache.getShader("shaders.lightmap"));
             filter.setResolution(this.game.width, this.game.height);
-            this.game.stage.filters = [filter];
+            this.world.filters = [filter];
         }
 
         update() {
