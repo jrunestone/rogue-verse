@@ -52,12 +52,18 @@ namespace RogueVerse.Entities.Ships {
         }
 
         addLights(lights: Phaser.Group) {
-            var leftHeadlight = new Components.Light(this.game);
+            var headlight = new Components.Light(this.game, "lights.spot");
 
-            leftHeadlight.scale.set(2, 2);
-            leftHeadlight.updateScreenPosition.add(() => { leftHeadlight.x = this.worldPosition.x; leftHeadlight.y = this.worldPosition.y; });
+            headlight.anchor.set(0.85, 0.55);
+            headlight.scale.set(2, 2);
 
-            lights.add(leftHeadlight);
+            headlight.updateScreenPosition.add(() => {
+                headlight.x = this.worldPosition.x;
+                headlight.y = this.worldPosition.y;
+                headlight.angle = -this.angle - 90;
+            });
+
+            lights.add(headlight);
         }
 
         addMountPoint(x: number, y: number, weapon: Entities.Weapons.Weapon) {

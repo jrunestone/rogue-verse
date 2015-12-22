@@ -15,7 +15,7 @@ void main() {
     vec4 diffuseColor = texture2D(uSampler, vTextureCoord);
 
     vec3 ambient = ambientColor.rgb * ambientColor.a;
-    vec3 intensity = ambient + lightColor.rgb;
+    vec3 intensity = ambient + lightColor.rgb * 2.0;
     vec4 finalColor = vec4(diffuseColor.rgb * intensity, diffuseColor.a);
 
     gl_FragColor = finalColor;

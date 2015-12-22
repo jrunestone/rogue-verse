@@ -51,7 +51,7 @@ namespace RogueVerse.States {
 
             var uniforms = {
                 uLightmap: { type: "sampler2D", value: this.lightmap },
-                ambientColor: { type: "4fv", value: [1, 1, 1, 0.2]}
+                ambientColor: { type: "4fv", value: [1, 1, 1, 0.1]}
             };
 
             var filter = new Phaser.Filter(this.game, uniforms, this.game.cache.getShader("shaders.lightmap"));
