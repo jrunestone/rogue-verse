@@ -5,7 +5,8 @@
 
 namespace RogueVerse {
     export class Game extends Phaser.Game {
-        setupCollisions: Phaser.Signal = new Phaser.Signal();
+        addCollisions: Phaser.Signal = new Phaser.Signal();
+        addLights: Phaser.Signal = new Phaser.Signal();
 
         constructor() {
             super(1280, 960, Phaser.AUTO);

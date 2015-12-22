@@ -14,7 +14,10 @@ namespace RogueVerse.States {
 
             this.game.load.spritesheet("asteroids.1", "assets/asteroids/asteroid1.png", 72, 72);
 
+            this.game.load.spritesheet("particles.light", "assets/particles/white.png", 128, 128);
             this.game.load.spritesheet("particles.impact", "assets/particles/debris.png", 42, 42);
+
+            this.game.load.shader("shaders.lightmap", "assets/shaders/lightmap.frag");
         }
 
         create() {

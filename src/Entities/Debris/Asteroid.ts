@@ -35,10 +35,10 @@ namespace RogueVerse.Entities.Debris {
             this.body.damping = 0;
             this.body.angularDamping = 0;
 
-            (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
+            (<RogueVerse.Game>this.game).addCollisions.add(() => this.addCollisions());
         }
 
-        setupCollisions() {
+        addCollisions() {
             this.body.collides([Asteroid.collisionGroup, Entities.Ships.Ship.collisionGroup, Entities.Projectiles.Projectile.collisionGroup]);
         }
 

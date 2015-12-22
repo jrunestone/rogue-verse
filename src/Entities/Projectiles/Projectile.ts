@@ -32,10 +32,10 @@ namespace RogueVerse.Entities.Projectiles {
             this.impactEmitter.minParticleScale = 0.1;
             this.impactEmitter.maxParticleScale = 0.1;
 
-            (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
+            (<RogueVerse.Game>this.game).addCollisions.add(() => this.addCollisions());
         }
 
-        setupCollisions() {
+        addCollisions() {
             this.body.collides(Entities.Debris.Asteroid.collisionGroup);
             this.body.onBeginContact.add(this.collide, this);
         }

@@ -1,4 +1,5 @@
 /// <reference path="../../../node_modules/phaser/typescript/phaser.d.ts"/>
+/// <reference path="../../Components/Light"/>
 /// <reference path="../Weapons/Weapon"/>
 /// <reference path="../Debris/Asteroid"/>
 
@@ -42,11 +43,21 @@ namespace RogueVerse.Entities.Ships {
             this.body.collideWorldBounds = false;
             this.checkWorldBounds = false;
 
-            (<RogueVerse.Game>this.game).setupCollisions.add(this.setupCollisions, this);
+            (<RogueVerse.Game>this.game).addCollisions.add(() => this.addCollisions());
+            (<RogueVerse.Game>this.game).addLights.add((lights: Phaser.Group) => this.addLights(lights));
         }
 
-        setupCollisions() {
+        addCollisions() {
             this.body.collides(Entities.Debris.Asteroid.collisionGroup);
+        }
+
+        addLights(lights: Phaser.Group) {
+            var leftHeadlight = new Components.Light(this.game);
+
+            leftHeadlight.scale.set(2, 2);
+            leftHeadlight.updateScreenPosition.add(() => { leftHeadlight.x = this.worldPosition.x; leftHeadlight.y = this.worldPosition.y; });
+
+            lights.add(leftHeadlight);
         }
 
         addMountPoint(x: number, y: number, weapon: Entities.Weapons.Weapon) {
