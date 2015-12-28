@@ -7,6 +7,7 @@ namespace RogueVerse.Entities.Projectiles {
         damageRating: number;
         speed: number;
         timeToLive: number;
+
         impactEmitter: Phaser.Particles.Arcade.Emitter;
 
         static collisionGroup: Phaser.Physics.P2.CollisionGroup;
@@ -48,6 +49,16 @@ namespace RogueVerse.Entities.Projectiles {
             this.impactEmitter.explode(200, 4);
 
             this.kill();
+        }
+
+        kill() {
+            // reset projectile position to parent so to reposition lights to origin
+            this.x = this.parent.x;
+            this.y = this.parent.y;
+            this.worldPosition.x = this.parent.worldPosition.x;
+            this.worldPosition.y = this.parent.worldPosition.y;
+
+            return super.kill();
         }
     }
 }

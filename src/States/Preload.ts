@@ -16,6 +16,7 @@ namespace RogueVerse.States {
 
             this.game.load.spritesheet("lights.point", "assets/lights/point.png", 128, 128);
             this.game.load.spritesheet("lights.spot", "assets/lights/spot.png", 193, 66);
+            this.game.load.image("lights.laser", "assets/lights/laser.png");
 
             this.game.load.spritesheet("particles.impact", "assets/particles/debris.png", 42, 42);
 

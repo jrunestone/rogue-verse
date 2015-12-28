@@ -71,7 +71,14 @@ namespace RogueVerse.States {
             }
 
             this.lightmap.clear();
-            this.lights.forEach((light: Components.Light) => { light.update(); this.lightmap.renderXY(light, light.x, this.game.height - light.y); });
+
+            this.lights.forEach((light: Components.Light) => {
+                light.update();
+
+                if (light.visible) {
+                    this.lightmap.renderXY(light, light.x, this.game.height - light.y);
+                }
+            });
         }
     }
 }

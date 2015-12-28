@@ -32,7 +32,7 @@ namespace RogueVerse.Entities.Weapons {
                 return;
             }
 
-            var projectile = this.projectiles.getFirstExists(false);
+            var projectile = <Projectiles.Projectile>this.projectiles.getFirstExists(false);
 
             if (projectile) {
                 projectile.reset(this.parent.x, this.parent.y);
