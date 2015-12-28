@@ -11,9 +11,10 @@ namespace RogueVerse.States {
 
             this.game.stage.setBackgroundColor("#000000");
             this.game.world.setBounds(0, 0, 2000, 2000);
-            
+
             this.game.physics.startSystem(Phaser.Physics.P2JS);
             this.game.physics.p2.setImpactEvents(true);
+            this.game.physics.p2.restitution = 0.7;
         }
 
         create() {
