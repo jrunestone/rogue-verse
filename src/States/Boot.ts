@@ -9,6 +9,7 @@ namespace RogueVerse.States {
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
 
+            this.game.time.advancedTiming = true;
             this.game.stage.setBackgroundColor("#000000");
             this.game.world.setBounds(0, 0, 2000, 2000);
 

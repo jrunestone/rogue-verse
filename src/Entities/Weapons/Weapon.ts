@@ -41,7 +41,7 @@ namespace RogueVerse.Entities.Weapons {
                 // scale down and set pivot to make rotations correct
                 // TODO: remove
                 projectile.scale.setTo(0.5, 0.5);
-                projectile.pivot.setTo(-this.x * 2, 10);
+                projectile.pivot.set(-this.x * 2, 10);
 
                 projectile.body.angle = (<Phaser.Sprite>this.parent).body.angle;
 

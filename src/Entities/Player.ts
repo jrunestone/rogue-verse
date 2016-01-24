@@ -18,8 +18,8 @@ namespace RogueVerse.Entities {
         };
 
         constructor(game: Phaser.Game, ship: Entities.Ships.Ship) {
-            this.ship = ship;
             this.game = game;
+            this.ship = ship;
 
             this.game.add.existing(this.ship);
             this.game.camera.follow(this.ship);
@@ -43,6 +43,11 @@ namespace RogueVerse.Entities {
                this.ship.fire(1);
             }
 
+            this.updateShip();
+            this.ship.yaw(this.getRotationToPointer());
+        }
+
+        private updateShip() {
             if (this.controls.brake.isDown) {
                 this.ship.braking = true;
             } else {
@@ -71,8 +76,6 @@ namespace RogueVerse.Entities {
             } else {
                 this.ship.boosting = false;
             }
-
-            this.ship.yaw(this.getRotationToPointer());
         }
 
         private getRotationToPointer() {

@@ -25,6 +25,8 @@ namespace RogueVerse.Entities.Ships {
         mountPoints: Entities.Weapons.Weapon[] = [];
         weaponGroups: number[][] = [];
 
+        kinematicAnchor: Phaser.Sprite;
+
         static collisionGroup: Phaser.Physics.P2.CollisionGroup;
 
         constructor(game: Phaser.Game, name: string, key: string) {
@@ -42,6 +44,11 @@ namespace RogueVerse.Entities.Ships {
             this.body.setCollisionGroup(Ship.collisionGroup);
             this.body.collideWorldBounds = false;
             this.checkWorldBounds = false;
+
+            // add a hidden mirror body without physics interaction to act as anchors for constraints etc
+            this.kinematicAnchor = new Phaser.Sprite(this.game, this.x, this.y);
+            this.game.physics.p2.enable(this.kinematicAnchor);
+            this.kinematicAnchor.body.static = true;
 
             (<RogueVerse.Game>this.game).addCollisions.add(() => this.addCollisions());
             (<RogueVerse.Game>this.game).addLights.add((lights: Phaser.Group) => this.addLights(lights));
@@ -154,6 +161,13 @@ namespace RogueVerse.Entities.Ships {
                     (<Phaser.Sprite>child).update();
                 }
             });
+
+            // update the body double
+            this.kinematicAnchor.x = this.x;
+            this.kinematicAnchor.y = this.y;
+            this.kinematicAnchor.body.x = this.body.x;
+            this.kinematicAnchor.body.y = this.body.y;
+            this.kinematicAnchor.body.rotation = this.body.rotation;
 
             this.game.world.wrap(this.body);
         }
