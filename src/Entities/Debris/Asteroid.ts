@@ -29,8 +29,8 @@ namespace RogueVerse.Entities.Debris {
             this.body.mass = 5 + scale;
 
             this.body.angularVelocity = this.game.rnd.realInRange(-1, 1);
-            this.body.velocity.x = this.game.rnd.realInRange(-100, 100);
-            this.body.velocity.y = this.game.rnd.realInRange(-100, 100);
+            this.body.velocity.x = this.game.rnd.realInRange(-100, 250);
+            this.body.velocity.y = this.game.rnd.realInRange(-100, 250);
 
             this.body.damping = 0;
             this.body.angularDamping = 0;

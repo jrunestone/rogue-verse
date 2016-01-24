@@ -1,22 +1,31 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
-/// <reference path="./FixedPip"/>
+/// <reference path="./Pip"/>
 
 namespace RogueVerse.Components {
     export class Hud {
         game: Phaser.Game;
         player: Entities.Player;
         text: Phaser.Text;
-        fixedPip: Components.FixedPip;
+
+        fixedPip: Components.Pip;
+        lagPip: Components.Pip;
 
         constructor(game: Phaser.Game, player: Entities.Player) {
             this.game = game;
             this.player = player;
 
             // the fixed pip is indicating where the ship's cannons are pointing
-            this.fixedPip = new FixedPip(this.game, "hud.pip", this.player.ship.kinematicAnchor);
+            this.fixedPip = new Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 8);
             this.fixedPip.scale.set(0.8, 0.8);
             this.game.add.existing(this.fixedPip);
+
+            // the lag pip is indicating where the projectile would hit were they fired right now
+            // TODO: calibrate lag to projectile speed
+            this.lagPip = new Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 27);
+            this.lagPip.scale.set(0.6, 0.6);
+            this.lagPip.angle = 45;
+            this.game.add.existing(this.lagPip);
 
             this.text = this.game.add.text(20, 20, "", {
                 font: "16px Arial",
