@@ -10,6 +10,7 @@ namespace RogueVerse.Components {
 
         fixedPip: Components.Pip;
         lagPip: Components.Pip;
+        pipLine: Phaser.BitmapData;
 
         constructor(game: Phaser.Game, player: Entities.Player) {
             this.game = game;
@@ -26,6 +27,13 @@ namespace RogueVerse.Components {
             this.lagPip.scale.set(0.6, 0.6);
             this.lagPip.angle = 45;
             this.game.add.existing(this.lagPip);
+
+            this.pipLine = this.game.add.bitmapData(this.game.width, this.game.height);
+            this.pipLine.ctx.lineWidth = "1";
+            this.pipLine.ctx.strokeStyle = "#ffffff";
+            this.pipLine.ctx.setLineDash([2, 3]);
+            this.pipLine.fixedToCamera = true;
+            this.pipLine.addToWorld().fixedToCamera = true;
 
             this.text = this.game.add.text(20, 20, "", {
                 font: "16px Arial",
@@ -48,6 +56,13 @@ namespace RogueVerse.Components {
             });
 
             this.text.setText(fps + "\n\n" + pos + "\n" + speed + "\n" + mode + "\n" + fuel + boost + "\n" + weapons.join("\n"));
+
+            this.pipLine.clear();
+            this.pipLine.ctx.beginPath();
+            this.pipLine.ctx.moveTo(this.fixedPip.worldPosition.x, this.fixedPip.worldPosition.y);
+            this.pipLine.ctx.lineTo(this.lagPip.worldPosition.x, this.lagPip.worldPosition.y);
+            this.pipLine.ctx.stroke();
+            this.pipLine.ctx.closePath();
         }
     }
 }
