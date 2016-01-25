@@ -10,8 +10,28 @@
     </head>
 
     <body>
-        <div style="position: absolute; z-index: 100; color: #fff; top: 0; left: 0;">bf2cf18</div>
+        <div style="position: absolute; z-index: 100; color: #fff; top: 0; left: 0; height: 100%; overflow-y: scroll;">
+            <p>Current commit: <strong><span id="commit"></span></strong></p>
+            <ul id="commits" style="margin: 0; padding: 0; list-style-type: none"></ul>
+        </div>
+
         <script src="scripts/phaser.min.js"></script>
         <script src="scripts/main.js"></script>
+
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+        <script>
+            $(function() {
+                $.getJSON("https://api.github.com/repos/swemaniac/rogue-verse/commits?sha=develop&per_page=100", function(data) {
+                    var list = $("#commits");
+
+                    $('#commit').text(data[0].sha.substr(0, 7));
+
+                    data.forEach(function(item) {
+                        list.append("<li style='margin: 0; padding: 0;'><strong>" + item.sha.substr(0, 7) + "</strong>: " + item.commit.message + "</li>");
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
