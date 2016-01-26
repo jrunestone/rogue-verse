@@ -6,7 +6,7 @@ namespace RogueVerse.Components {
         constraint: Phaser.Physics.P2.LockConstraint;
         minDistance: number = 70;
 
-        constructor(game: Phaser.Game, key, anchorObject: PIXI.DisplayObject, lag: number) {
+        constructor(game: Phaser.Game, key:string, anchorObject: PIXI.DisplayObject, lag: number) {
             super(game, 0, 0, key);
 
             this.anchorObject = anchorObject;

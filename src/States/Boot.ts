@@ -5,7 +5,6 @@ namespace RogueVerse.States {
         static Key = "boot";
 
         init() {
-
             this.scale.pageAlignHorizontally = true;
             this.scale.pageAlignVertically = true;
 

@@ -25,6 +25,7 @@ namespace RogueVerse.Entities.Weapons {
             this.projectiles = this.game.add.group();
             this.projectiles.classType = projectileType;
             this.projectiles.createMultiple(20, null);
+            (<RogueVerse.Game>this.game).worldLayer.add(this.projectiles);
         }
 
         fire() {

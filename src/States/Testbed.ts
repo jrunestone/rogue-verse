@@ -20,16 +20,22 @@ namespace RogueVerse.States {
         lightmap: Phaser.RenderTexture;
 
         create() {
+            (<RogueVerse.Game>this.game).worldLayer = this.game.add.group();
+            (<RogueVerse.Game>this.game).uiLayer = this.game.add.group();
+
             this.starField = game.add.tileSprite(0, 0, 2000, 2000, "bg.starfield");
+            (<RogueVerse.Game>this.game).worldLayer.add(this.starField);
             this.starField.autoScroll(5, 0);
 
             this.nebulaField = game.add.tileSprite(0, 0, 2000, 2000, "bg.nebulafield");
+            (<RogueVerse.Game>this.game).worldLayer.add(this.nebulaField);
             this.nebulaField.alpha = 0.3;
             this.nebulaField.autoScroll(-5, 0);
 
             this.asteroids = this.game.add.group();
             this.asteroids.classType = Entities.Debris.Asteroid;
             this.asteroids.createMultiple(10, "asteroids.1", null, true);
+            (<RogueVerse.Game>this.game).worldLayer.add(this.asteroids);
 
             var ship = new Entities.Ships.Avenger(this.game);
 
@@ -51,12 +57,13 @@ namespace RogueVerse.States {
 
             var uniforms = {
                 uLightmap: { type: "sampler2D", value: this.lightmap },
-                ambientColor: { type: "4fv", value: [1, 1, 1, 0.1]}
+                ambientColor: { type: "4fv", value: [1, 1, 1, 0.2]}
             };
 
             var filter = new Phaser.Filter(this.game, uniforms, this.game.cache.getShader("shaders.lightmap"));
             filter.setResolution(this.game.width, this.game.height);
-            this.world.filters = [filter];
+
+            (<RogueVerse.Game>this.game).worldLayer.filters = [filter];
         }
 
         update() {

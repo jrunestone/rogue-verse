@@ -22,6 +22,7 @@ namespace RogueVerse.Entities {
             this.ship = ship;
 
             this.game.add.existing(this.ship);
+            (<RogueVerse.Game>this.game).worldLayer.add(this.ship);
             this.game.camera.follow(this.ship);
 
             this.controls = this.game.input.keyboard.addKeys({

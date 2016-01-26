@@ -1,6 +1,6 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
-/// <reference path="./Pip"/>
+/// <reference path="Pip"/>
 
 namespace RogueVerse.Components {
     export class Hud {
@@ -18,28 +18,37 @@ namespace RogueVerse.Components {
 
             // the fixed pip is indicating where the ship's cannons are pointing
             this.fixedPip = new Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 8);
+            this.fixedPip.alpha = 0.5;
             this.fixedPip.scale.set(0.8, 0.8);
             this.game.add.existing(this.fixedPip);
+            (<RogueVerse.Game>this.game).uiLayer.add(this.fixedPip);
 
             // the lag pip is indicating where the projectile would hit were they fired right now
             // TODO: calibrate lag to projectile speed
             this.lagPip = new Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 27);
+            this.lagPip.alpha = 0.5;
             this.lagPip.scale.set(0.6, 0.6);
             this.lagPip.angle = 45;
             this.game.add.existing(this.lagPip);
+            (<RogueVerse.Game>this.game).uiLayer.add(this.lagPip);
 
             this.pipLine = this.game.add.bitmapData(this.game.width, this.game.height);
-            this.pipLine.ctx.lineWidth = "1";
+            this.pipLine.ctx.lineWidth = 1;
             this.pipLine.ctx.strokeStyle = "#ffffff";
             this.pipLine.ctx.setLineDash([2, 3]);
-            this.pipLine.fixedToCamera = true;
-            this.pipLine.addToWorld().fixedToCamera = true;
+
+            var pipLineImg = this.pipLine.addToWorld();
+            (<RogueVerse.Game>this.game).uiLayer.add(pipLineImg);
+
+            pipLineImg.alpha = 0.1;
+            pipLineImg.fixedToCamera = true;
 
             this.text = this.game.add.text(20, 20, "", {
                 font: "16px Arial",
                 fill: "#ffffff"
             });
 
+            (<RogueVerse.Game>this.game).uiLayer.add(this.text);
             this.text.fixedToCamera = true;
         }
 

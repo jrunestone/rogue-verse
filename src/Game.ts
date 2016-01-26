@@ -5,6 +5,12 @@
 
 namespace RogueVerse {
     export class Game extends Phaser.Game {
+        // the world group is affected by lighting
+        worldLayer: Phaser.Group;
+
+        // the ui group is rendered on top of the world group and is not affected by lighting
+        uiLayer: Phaser.Group;
+
         addCollisions: Phaser.Signal = new Phaser.Signal();
         addLights: Phaser.Signal = new Phaser.Signal();
 
