@@ -11,7 +11,7 @@
 
     <body>
         <div style="position: absolute; z-index: 100; color: #fff; top: 0; left: 0; width: 350px; height: 100%; overflow-y: scroll; white-space: nowrap;">
-            <p>Last commit: <strong><span id="commit"></span></strong></p>
+            <p>Last commit: <strong style="font-size: 75%"><span id="commit"></span></strong></p>
             <ul id="commits" style="margin: 0; padding: 0; list-style-type: none"></ul>
         </div>
 
@@ -28,7 +28,7 @@
                     $('#commit').text(data[0].commit.committer.date);
 
                     data.forEach(function(item) {
-                        list.append("<li style='margin: 0; padding: 0;'><strong>" + item.commit.committer.date + "</strong>: " + item.commit.message + "</li>");
+                        list.append("<li style='margin: 0; padding: 0;'><strong style='font-size: 75%'>" + item.commit.committer.date + "</strong>: " + item.commit.message + "</li>");
                     });
                 });
             });
