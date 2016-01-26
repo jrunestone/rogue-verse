@@ -204,6 +204,7 @@ var RogueVerse;
                     this.projectiles = this.game.add.group();
                     this.projectiles.classType = projectileType;
                     this.projectiles.createMultiple(20, null);
+                    this.game.worldLayer.add(this.projectiles);
                 }
                 Weapon.prototype.fire = function () {
                     if (this.overheated || this.game.time.elapsedSince(this.lastFireTime) < 1000 / this.firingRate) {
@@ -384,6 +385,7 @@ var RogueVerse;
                 this.game = game;
                 this.ship = ship;
                 this.game.add.existing(this.ship);
+                this.game.worldLayer.add(this.ship);
                 this.game.camera.follow(this.ship);
                 this.controls = this.game.input.keyboard.addKeys({
                     "forward": Phaser.KeyCode.W,
@@ -578,7 +580,7 @@ var RogueVerse;
 })(RogueVerse || (RogueVerse = {}));
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
-/// <reference path="./Pip"/>
+/// <reference path="Pip"/>
 var RogueVerse;
 (function (RogueVerse) {
     var Components;
@@ -588,22 +590,29 @@ var RogueVerse;
                 this.game = game;
                 this.player = player;
                 this.fixedPip = new Components.Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 8);
+                this.fixedPip.alpha = 0.5;
                 this.fixedPip.scale.set(0.8, 0.8);
                 this.game.add.existing(this.fixedPip);
+                this.game.uiLayer.add(this.fixedPip);
                 this.lagPip = new Components.Pip(this.game, "hud.pip", this.player.ship.kinematicAnchor, 27);
+                this.lagPip.alpha = 0.5;
                 this.lagPip.scale.set(0.6, 0.6);
                 this.lagPip.angle = 45;
                 this.game.add.existing(this.lagPip);
+                this.game.uiLayer.add(this.lagPip);
                 this.pipLine = this.game.add.bitmapData(this.game.width, this.game.height);
-                this.pipLine.ctx.lineWidth = "1";
+                this.pipLine.ctx.lineWidth = 1;
                 this.pipLine.ctx.strokeStyle = "#ffffff";
                 this.pipLine.ctx.setLineDash([2, 3]);
-                this.pipLine.fixedToCamera = true;
-                this.pipLine.addToWorld().fixedToCamera = true;
+                var pipLineImg = this.pipLine.addToWorld();
+                this.game.uiLayer.add(pipLineImg);
+                pipLineImg.alpha = 0.1;
+                pipLineImg.fixedToCamera = true;
                 this.text = this.game.add.text(20, 20, "", {
                     font: "16px Arial",
                     fill: "#ffffff"
                 });
+                this.game.uiLayer.add(this.text);
                 this.text.fixedToCamera = true;
             }
             Hud.prototype.update = function () {
@@ -646,14 +655,19 @@ var RogueVerse;
                 _super.apply(this, arguments);
             }
             Testbed.prototype.create = function () {
+                this.game.worldLayer = this.game.add.group();
+                this.game.uiLayer = this.game.add.group();
                 this.starField = game.add.tileSprite(0, 0, 2000, 2000, "bg.starfield");
+                this.game.worldLayer.add(this.starField);
                 this.starField.autoScroll(5, 0);
                 this.nebulaField = game.add.tileSprite(0, 0, 2000, 2000, "bg.nebulafield");
+                this.game.worldLayer.add(this.nebulaField);
                 this.nebulaField.alpha = 0.3;
                 this.nebulaField.autoScroll(-5, 0);
                 this.asteroids = this.game.add.group();
                 this.asteroids.classType = RogueVerse.Entities.Debris.Asteroid;
                 this.asteroids.createMultiple(10, "asteroids.1", null, true);
+                this.game.worldLayer.add(this.asteroids);
                 var ship = new RogueVerse.Entities.Ships.Avenger(this.game);
                 ship.x = this.game.world.centerX;
                 ship.y = this.game.world.centerY;
@@ -668,11 +682,11 @@ var RogueVerse;
                 this.lightmap = this.game.add.renderTexture(this.game.width, this.game.height);
                 var uniforms = {
                     uLightmap: { type: "sampler2D", value: this.lightmap },
-                    ambientColor: { type: "4fv", value: [1, 1, 1, 0.1] }
+                    ambientColor: { type: "4fv", value: [1, 1, 1, 0.2] }
                 };
                 var filter = new Phaser.Filter(this.game, uniforms, this.game.cache.getShader("shaders.lightmap"));
                 filter.setResolution(this.game.width, this.game.height);
-                this.world.filters = [filter];
+                this.game.worldLayer.filters = [filter];
             };
             Testbed.prototype.update = function () {
                 var _this = this;

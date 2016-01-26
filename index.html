@@ -11,7 +11,7 @@
 
     <body>
         <div style="position: absolute; z-index: 100; color: #fff; top: 0; left: 0; width: 350px; height: 100%; overflow-y: scroll; white-space: nowrap;">
-            <p>Current commit: <strong><span id="commit"></span></strong></p>
+            <p>Last commit: <strong><span id="commit"></span></strong></p>
             <ul id="commits" style="margin: 0; padding: 0; list-style-type: none"></ul>
         </div>
 
@@ -25,10 +25,10 @@
                 $.getJSON("https://api.github.com/repos/swemaniac/rogue-verse/commits?sha=develop&per_page=100", function(data) {
                     var list = $("#commits");
 
-                    $('#commit').text(data[0].sha.substr(0, 7));
+                    $('#commit').text(data[0].committer.date);
 
                     data.forEach(function(item) {
-                        list.append("<li style='margin: 0; padding: 0;'><strong>" + item.sha.substr(0, 7) + "</strong>: " + item.commit.message + "</li>");
+                        list.append("<li style='margin: 0; padding: 0;'><strong>" + item.committer.date + "</strong>: " + item.commit.message + "</li>");
                     });
                 });
             });
