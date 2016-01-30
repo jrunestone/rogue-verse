@@ -1,16 +1,21 @@
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
 /// <reference path="Pip"/>
+/// <reference path="Meter"/>
 
 namespace RogueVerse.Components {
     export class Hud {
         game: Phaser.Game;
         player: Entities.Player;
-        text: Phaser.Text;
+        debugText: Phaser.Text;
 
         fixedPip: Components.Pip;
         lagPip: Components.Pip;
         pipLine: Phaser.BitmapData;
+
+        speedBar: Components.Meter;
+        overheatBar: Components.Meter;
+        healthBar: Components.Meter;
 
         constructor(game: Phaser.Game, player: Entities.Player) {
             this.game = game;
@@ -32,6 +37,7 @@ namespace RogueVerse.Components {
             this.game.add.existing(this.lagPip);
             (<RogueVerse.Game>this.game).uiLayer.add(this.lagPip);
 
+            // draw a line between the pips
             this.pipLine = this.game.add.bitmapData(this.game.width, this.game.height);
             this.pipLine.ctx.lineWidth = 1;
             this.pipLine.ctx.strokeStyle = "#ffffff";
@@ -43,29 +49,45 @@ namespace RogueVerse.Components {
             pipLineImg.alpha = 0.1;
             pipLineImg.fixedToCamera = true;
 
-            this.text = this.game.add.text(20, 20, "", {
-                font: "16px Arial",
+            // status bars
+            this.speedBar = new Components.Meter(this.game, 20, this.game.height - 70, 150, 5, 0xffffff);
+            (<RogueVerse.Game>this.game).uiLayer.add(this.speedBar);
+
+            this.overheatBar = new Components.Meter(this.game, 20, this.game.height - 60, 150, 5, 0xffffff);
+            (<RogueVerse.Game>this.game).uiLayer.add(this.overheatBar);
+
+            this.healthBar = new Components.Meter(this.game, 20, this.game.height - 50, 150, 5, 0xffffff);
+            (<RogueVerse.Game>this.game).uiLayer.add(this.healthBar);
+
+            // debug text
+            this.debugText = this.game.add.text(20, 20, "", {
+                font: "14px Arial",
                 fill: "#ffffff"
             });
 
-            (<RogueVerse.Game>this.game).uiLayer.add(this.text);
-            this.text.fixedToCamera = true;
+            (<RogueVerse.Game>this.game).uiLayer.add(this.debugText);
+            this.debugText.fixedToCamera = true;
         }
 
         update() {
-            var fps = this.game.time.fps.toString();
-            var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
-            var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
-            var pos = "Position: " + Math.round(this.player.ship.x) + ", " + Math.round(this.player.ship.y);
+            /*var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
             var fuel = "Boost fuel: " + Math.round(this.player.ship.boostFuel) + "/" + this.player.ship.boostFuelCapacity;
-            var boost = this.player.ship.boosting ? " BOOST" : "";
+            var boost = this.player.ship.boosting ? " BOOST" : "";*/
 
-            var weapons: string[] = this.player.ship.mountPoints.map(mount => {
-                return mount.name + ": " + Math.round(mount.overheatTimer) + "/" + mount.cooldownTime + (mount.overheated ? " OVERHEATED" : "");
-            });
+            // draw debug text
+            this.debugText.setText(this.game.time.fps.toString());
 
-            this.text.setText(fps + "\n\n" + pos + "\n" + speed + "\n" + mode + "\n" + fuel + boost + "\n" + weapons.join("\n"));
+            // draw status bars
+            this.speedBar.progress = this.player.ship.getTotalSpeed() / this.player.ship.maxSpeed;
+            this.speedBar.color = this.player.ship.boosting && this.player.ship.boostFuel > 0 ? 0xffcc00 : 0xffffff;
 
+            var defaultMount = this.player.ship.mountPoints[0];
+            this.overheatBar.progress = defaultMount.overheatTimer / defaultMount.cooldownTime;
+            this.overheatBar.color = defaultMount.overheated ? 0xd9534f : 0xffffff;
+
+            this.healthBar.progress = 1;
+
+            // draw the lines between pips
             this.pipLine.clear();
             this.pipLine.ctx.beginPath();
             this.pipLine.ctx.moveTo(this.fixedPip.worldPosition.x, this.fixedPip.worldPosition.y);
