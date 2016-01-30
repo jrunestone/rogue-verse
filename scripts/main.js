@@ -579,8 +579,39 @@ var RogueVerse;
     })(Components = RogueVerse.Components || (RogueVerse.Components = {}));
 })(RogueVerse || (RogueVerse = {}));
 /// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
+var RogueVerse;
+(function (RogueVerse) {
+    var Components;
+    (function (Components) {
+        var Meter = (function (_super) {
+            __extends(Meter, _super);
+            function Meter(game, x, y, width, height, color, angle) {
+                if (color === void 0) { color = 0xffffff; }
+                if (angle === void 0) { angle = -3.0; }
+                _super.call(this, game, x, y);
+                this.barWidth = width;
+                this.barHeight = height;
+                this.color = color;
+                this.angle = angle;
+                this.fixedToCamera = true;
+            }
+            Meter.prototype.update = function () {
+                this.clear();
+                this.beginFill(0xffffff, 0.1);
+                this.drawRect(0, 0, this.barWidth, this.barHeight);
+                this.beginFill(this.color, 1.0);
+                this.drawRect(0, 0, this.barWidth * this.progress, this.barHeight);
+                _super.prototype.update.call(this);
+            };
+            return Meter;
+        })(Phaser.Graphics);
+        Components.Meter = Meter;
+    })(Components = RogueVerse.Components || (RogueVerse.Components = {}));
+})(RogueVerse || (RogueVerse = {}));
+/// <reference path="../../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../Entities/Player"/>
 /// <reference path="Pip"/>
+/// <reference path="Meter"/>
 var RogueVerse;
 (function (RogueVerse) {
     var Components;
@@ -608,24 +639,30 @@ var RogueVerse;
                 this.game.uiLayer.add(pipLineImg);
                 pipLineImg.alpha = 0.1;
                 pipLineImg.fixedToCamera = true;
-                this.text = this.game.add.text(20, 20, "", {
-                    font: "16px Arial",
+                this.speedBar = new Components.Meter(this.game, 20, this.game.height - 70, 150, 5, 0xffffff);
+                this.game.uiLayer.add(this.speedBar);
+                this.overheatBar = new Components.Meter(this.game, 20, this.game.height - 60, 150, 5, 0xffffff);
+                this.game.uiLayer.add(this.overheatBar);
+                this.healthBar = new Components.Meter(this.game, 20, this.game.height - 50, 150, 5, 0xffffff);
+                this.game.uiLayer.add(this.healthBar);
+                this.debugText = this.game.add.text(20, 20, "", {
+                    font: "14px Arial",
                     fill: "#ffffff"
                 });
-                this.game.uiLayer.add(this.text);
-                this.text.fixedToCamera = true;
+                this.game.uiLayer.add(this.debugText);
+                this.debugText.fixedToCamera = true;
             }
             Hud.prototype.update = function () {
-                var fps = this.game.time.fps.toString();
-                var speed = "Speed: " + Math.round(this.player.ship.getTotalSpeed());
-                var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
-                var pos = "Position: " + Math.round(this.player.ship.x) + ", " + Math.round(this.player.ship.y);
+                /*var mode = "Mode: " + (this.player.ship.coupled ? "coupled" : "decoupled");
                 var fuel = "Boost fuel: " + Math.round(this.player.ship.boostFuel) + "/" + this.player.ship.boostFuelCapacity;
-                var boost = this.player.ship.boosting ? " BOOST" : "";
-                var weapons = this.player.ship.mountPoints.map(function (mount) {
-                    return mount.name + ": " + Math.round(mount.overheatTimer) + "/" + mount.cooldownTime + (mount.overheated ? " OVERHEATED" : "");
-                });
-                this.text.setText(fps + "\n\n" + pos + "\n" + speed + "\n" + mode + "\n" + fuel + boost + "\n" + weapons.join("\n"));
+                var boost = this.player.ship.boosting ? " BOOST" : "";*/
+                this.debugText.setText(this.game.time.fps.toString());
+                this.speedBar.progress = this.player.ship.getTotalSpeed() / this.player.ship.maxSpeed;
+                this.speedBar.color = this.player.ship.boosting && this.player.ship.boostFuel > 0 ? 0xffcc00 : 0xffffff;
+                var defaultMount = this.player.ship.mountPoints[0];
+                this.overheatBar.progress = defaultMount.overheatTimer / defaultMount.cooldownTime;
+                this.overheatBar.color = defaultMount.overheated ? 0xd9534f : 0xffffff;
+                this.healthBar.progress = 1;
                 this.pipLine.clear();
                 this.pipLine.ctx.beginPath();
                 this.pipLine.ctx.moveTo(this.fixedPip.worldPosition.x, this.fixedPip.worldPosition.y);
