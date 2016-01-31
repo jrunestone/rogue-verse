@@ -48,8 +48,11 @@ var RogueVerse;
                 this.game.load.image("ships.avenger", "assets/ships/avenger.png");
                 this.game.load.image("weapons.badger", "assets/weapons/badger.png");
                 this.game.load.image("projectiles.laser", "assets/projectiles/laser.png");
-                this.game.load.image("hud.pip", "assets/hud/pip.png");
                 this.game.load.spritesheet("asteroids.1", "assets/asteroids/asteroid1.png", 72, 72);
+                this.game.load.image("hud.pip", "assets/hud/pip.png");
+                this.game.load.image("hud.pulse", "assets/hud/pulse.png");
+                this.game.load.image("hud.ammo", "assets/hud/ammo.png");
+                this.game.load.image("hud.energy", "assets/hud/energy.png");
                 this.game.load.spritesheet("lights.point", "assets/lights/point.png", 128, 128);
                 this.game.load.spritesheet("lights.spot", "assets/lights/spot.png", 193, 66);
                 this.game.load.image("lights.laser", "assets/lights/laser.png");
@@ -585,26 +588,36 @@ var RogueVerse;
     (function (Components) {
         var Meter = (function (_super) {
             __extends(Meter, _super);
-            function Meter(game, x, y, width, height, color, angle) {
+            function Meter(game, x, y, width, height, color, iconKey, angle) {
                 if (color === void 0) { color = 0xffffff; }
+                if (iconKey === void 0) { iconKey = null; }
                 if (angle === void 0) { angle = -3.0; }
-                _super.call(this, game, x, y);
+                _super.call(this, game);
                 this.barWidth = width;
                 this.barHeight = height;
                 this.color = color;
                 this.angle = angle;
-                this.fixedToCamera = true;
+                this.x = x;
+                this.y = y;
+                this.bar = this.game.add.graphics(0, 0);
+                this.add(this.bar);
+                this.bar.fixedToCamera = true;
+                if (iconKey) {
+                    this.icon = this.game.add.sprite(-25, -5, iconKey);
+                    this.add(this.icon);
+                    this.icon.fixedToCamera = true;
+                }
             }
             Meter.prototype.update = function () {
-                this.clear();
-                this.beginFill(0xffffff, 0.1);
-                this.drawRect(0, 0, this.barWidth, this.barHeight);
-                this.beginFill(this.color, 1.0);
-                this.drawRect(0, 0, this.barWidth * this.progress, this.barHeight);
+                this.bar.clear();
+                this.bar.beginFill(0xffffff, 0.1);
+                this.bar.drawRect(0, 0, this.barWidth, this.barHeight);
+                this.bar.beginFill(this.color, 1.0);
+                this.bar.drawRect(0, 0, this.barWidth * this.progress, this.barHeight);
                 _super.prototype.update.call(this);
             };
             return Meter;
-        })(Phaser.Graphics);
+        })(Phaser.Group);
         Components.Meter = Meter;
     })(Components = RogueVerse.Components || (RogueVerse.Components = {}));
 })(RogueVerse || (RogueVerse = {}));
@@ -639,11 +652,11 @@ var RogueVerse;
                 this.game.uiLayer.add(pipLineImg);
                 pipLineImg.alpha = 0.1;
                 pipLineImg.fixedToCamera = true;
-                this.speedBar = new Components.Meter(this.game, 20, this.game.height - 70, 150, 5, 0xffffff);
+                this.speedBar = new Components.Meter(this.game, 40, this.game.height - 90, 150, 5, 0xffffff, "hud.energy");
                 this.game.uiLayer.add(this.speedBar);
-                this.overheatBar = new Components.Meter(this.game, 20, this.game.height - 60, 150, 5, 0xffffff);
+                this.overheatBar = new Components.Meter(this.game, 40, this.game.height - 70, 150, 5, 0xffffff, "hud.ammo");
                 this.game.uiLayer.add(this.overheatBar);
-                this.healthBar = new Components.Meter(this.game, 20, this.game.height - 50, 150, 5, 0xffffff);
+                this.healthBar = new Components.Meter(this.game, 40, this.game.height - 50, 150, 5, 0xffffff, "hud.pulse");
                 this.game.uiLayer.add(this.healthBar);
                 this.debugText = this.game.add.text(20, 20, "", {
                     font: "14px Arial",
