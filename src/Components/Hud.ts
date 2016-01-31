@@ -50,13 +50,13 @@ namespace RogueVerse.Components {
             pipLineImg.fixedToCamera = true;
 
             // status bars
-            this.speedBar = new Components.Meter(this.game, 20, this.game.height - 70, 150, 5, 0xffffff);
+            this.speedBar = new Components.Meter(this.game, 40, this.game.height - 90, 150, 5, 0xffffff, "hud.energy");
             (<RogueVerse.Game>this.game).uiLayer.add(this.speedBar);
 
-            this.overheatBar = new Components.Meter(this.game, 20, this.game.height - 60, 150, 5, 0xffffff);
+            this.overheatBar = new Components.Meter(this.game, 40, this.game.height - 70, 150, 5, 0xffffff, "hud.ammo");
             (<RogueVerse.Game>this.game).uiLayer.add(this.overheatBar);
 
-            this.healthBar = new Components.Meter(this.game, 20, this.game.height - 50, 150, 5, 0xffffff);
+            this.healthBar = new Components.Meter(this.game, 40, this.game.height - 50, 150, 5, 0xffffff, "hud.pulse");
             (<RogueVerse.Game>this.game).uiLayer.add(this.healthBar);
 
             // debug text
@@ -77,7 +77,7 @@ namespace RogueVerse.Components {
             // draw debug text
             this.debugText.setText(this.game.time.fps.toString());
 
-            // draw status bars
+            // update status bars
             this.speedBar.progress = this.player.ship.getTotalSpeed() / this.player.ship.maxSpeed;
             this.speedBar.color = this.player.ship.boosting && this.player.ship.boostFuel > 0 ? 0xffcc00 : 0xffffff;
 

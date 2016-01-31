@@ -11,9 +11,13 @@ namespace RogueVerse.States {
             this.game.load.image("ships.avenger", "assets/ships/avenger.png");
             this.game.load.image("weapons.badger", "assets/weapons/badger.png");
             this.game.load.image("projectiles.laser", "assets/projectiles/laser.png");
-            this.game.load.image("hud.pip", "assets/hud/pip.png");
 
             this.game.load.spritesheet("asteroids.1", "assets/asteroids/asteroid1.png", 72, 72);
+
+            this.game.load.image("hud.pip", "assets/hud/pip.png");
+            this.game.load.image("hud.pulse", "assets/hud/pulse.png");
+            this.game.load.image("hud.ammo", "assets/hud/ammo.png");
+            this.game.load.image("hud.energy", "assets/hud/energy.png");
 
             this.game.load.spritesheet("lights.point", "assets/lights/point.png", 128, 128);
             this.game.load.spritesheet("lights.spot", "assets/lights/spot.png", 193, 66);
